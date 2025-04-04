@@ -1,0 +1,37 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  color: white;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.menu li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: white;
+  margin: 10px 0;
+}
+
+.footer-text {
+  font-size: 14px;
+  opacity: 0.8;
+}

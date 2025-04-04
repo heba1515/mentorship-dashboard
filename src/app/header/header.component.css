@@ -1,0 +1,31 @@
+.search-box {
+  width: 40%;
+}
+
+.form-control {
+  border-radius: 20px;
+  padding: 8px 15px;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+}
+
+.notification {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 10px;
+  padding: 4px 6px;
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
