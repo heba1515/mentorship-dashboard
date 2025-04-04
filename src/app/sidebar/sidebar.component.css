@@ -19,7 +19,7 @@
   transition: background 0.3s;
 }
 
-.menu li:hover {
+.menu li:hover, .active_link {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
 }

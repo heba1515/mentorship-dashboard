@@ -1,0 +1,30 @@
+.card {
+  border: 1px solid #e0e0e0;
+}
+
+.card-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.badge {
+  font-size: 0.875rem;
+  padding: 0.3em 0.75em;
+  border-radius: 50px;
+}
+
+.pagination .page-link {
+  color: #198754;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #198754;
+  border-color: #198754;
+  color: #fff;
+}

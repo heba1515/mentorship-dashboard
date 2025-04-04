@@ -1,0 +1,155 @@
+<div class="container mt-3">
+  <div class="row">
+    <!-- Mentor List -->
+    <div class="col-md-6">
+      <div class="card shadow-sm rounded-3">
+        <h5 class="card-header bg-white">Mentor List</h5>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mentor Name</th>
+                <th>Title</th>
+                <th>Reviews</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(mentor of mentors; track $index){
+              <tr>
+                <td>
+                  <img [src]="mentor.image" class="avatar rounded-circle me-2"> {{ mentor.name }}
+                </td>
+                <td>{{ mentor.title }}</td>
+                <td>
+                  @for(star of getStars(mentor.rating); track $index){
+                  <span>
+                    <i class="fas fa-star" [ngClass]="{'text-warning': star}"></i>
+                  </span>
+                  }
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learner List -->
+    <div class="col-md-6">
+      <div class="card shadow-sm rounded-3">
+        <h5 class="card-header bg-white">Learner List</h5>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Learner Name</th>
+                <th>Phone</th>
+                <th>Last Visit</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(learner of learners; track $index){
+              <tr>
+                <td>
+                  <img [src]="learner.image" class="avatar rounded-circle me-2"> {{ learner.name }}
+                </td>
+                <td>{{ learner.phone }}</td>
+                <td>{{ learner.lastVisit }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-4">
+  <div class="card shadow-sm rounded-3">
+    <div class="card-header bg-white d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <h5 class="mb-3 mb-md-0">Booking List</h5>
+      <div class="d-flex flex-column flex-sm-row gap-3">
+        <select class="form-select form-select-sm" style="width: 150px;" [(ngModel)]="statusFilter">
+          <option value="">All Statuses</option>
+          <option value="completed">Completed</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Booking Table -->
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col" class="ps-4">Mentor</th>
+              <th scope="col">Course</th>
+              <th scope="col">Learner</th>
+              <th scope="col">Booking Time</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-end pe-4">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(booking of bookings; track booking.id; let i = $index){
+            <tr>
+              <td class="ps-4">
+                <div class="d-flex align-items-center">
+                  <img [src]="booking.mentor.image" [alt]="booking.mentor.name" class="avatar rounded-circle me-3">
+                  <div>
+                    <div class="fw-semibold">{{ booking.mentor.name }}</div>
+                    <small class="text-muted">{{ booking.mentor.title }}</small>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <span class="badge text-dark fw-bold">{{ booking.course }}</span>
+              </td>
+
+              <td>
+                <div class="d-flex align-items-center">
+                  <img [src]="booking.mentee.image" [alt]="booking.mentee.name" class="avatar rounded-circle me-3">
+                  <div>
+                    <div class="fw-semibold">{{ booking.mentee.name }}</div>
+                    <small class="text-muted">{{ booking.mentee.level }}</small>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <div>{{ booking.date | date:'d MMM y' }}</div>
+                <div class="text-muted small">{{ booking.startTime }} - {{ booking.endTime }}</div>
+              </td>
+
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-success': booking.status === 'completed',
+                  'bg-primary': booking.status === 'upcoming',
+                  'bg-danger': booking.status === 'cancelled'
+                }">
+                  {{ booking.status | titlecase }}
+                </span>
+              </td>
+
+              <td class="text-end pe-4 fw-semibold">
+                ${{ booking.amount | number:'1.2-2' }}
+              </td>
+            </tr>
+            } @empty {
+            <tr>
+              <td colspan="6" class="text-center py-4 text-muted">
+                No bookings found
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
