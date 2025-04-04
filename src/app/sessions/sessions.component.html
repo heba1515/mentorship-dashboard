@@ -1,0 +1,84 @@
+   <!-- Sessions Table -->
+   <h2>Sessions</h2>
+   <p>Dashboard / <span class="frist-color">Sessions</span></p>
+   <div class="card   rounded">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Sessions Id</th>
+                <th scope="col " class="ps-4 second-color">Session Title</th>
+                <th scope="col">Sessions Price</th>
+                <th scope="col">Mentor Name </th>
+                <th scope="col">Date</th>
+                <th scope="col">status</th>
+                <th scope="col" class="text-end pe-4">Duration</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              @for(session of sessions; track session.id; let i = $index){
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <div class="fw-semibold">{{ session.id }}</div>
+                    </div>
+                  </div>
+                </td>
+    
+                <td>
+                  <span class="badge text-dark fw-bold">{{ session.Title }}</span>
+                </td>
+    
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <div class="fw-semibold">${{ session.Price | number:'1.2-2' }}</div>
+                    </div>
+                  </div>
+                </td>
+    
+                <td>
+                  <div>{{ session.MentorName }}</div>
+                </td>
+
+                <td>
+                    <div>
+                        {{ session.Date  }}
+
+                    </div>
+                    <div class="text-muted small">5:00 AM</div>
+
+  
+                </td>
+    
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'bgact': session.status === 'active',
+                    'bgpend': session.status === 'pending'
+                  }">
+                    {{ session.status | titlecase }}
+                  </span>
+                </td>
+    
+               
+
+                <td>
+                  <div>{{session.Duration}} minute</div>
+                </td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No bookings found
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+   </div>
