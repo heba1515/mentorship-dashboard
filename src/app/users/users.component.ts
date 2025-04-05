@@ -1,19 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface user {
-  id: number;
-  user: {
-    name: string;
-    image: string;
-    title: string;
-  };
-  date: string;
-  email: string;
-  phone: number;
-  status: 'active'  | 'pending';
-}
+import { user } from '../interfaces/user';
 
 @Component({
   selector: 'app-users',

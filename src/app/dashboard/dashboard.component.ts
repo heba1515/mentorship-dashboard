@@ -1,43 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface mentor {
-  id: number;
-  mentor: {
-    name: string;
-    image: string;
-    title: string;
-  };
-  date: string;
-  email: string;
-  phone: number;
-  status: 'active'  | 'pending';
-  earnd: number;
-}
-
-interface user {
-  id: number;
-  user: {
-    name: string;
-    image: string;
-    title: string;
-  };
-  date: string;
-  email: string;
-  phone: number;
-  status: 'active'  | 'pending';
-}
-
-interface Session {
-  id: number;
-  Title: string;
-  Price: number;
-  MentorName: string;
-  Date: string;
-  status: 'active' | 'pending';
-  Duration: number;
-}
+import { mentor } from '../interfaces/mentor';
+import { user } from '../interfaces/user';
+import { session } from '../interfaces/Session';
 
 @Component({
   selector: 'app-dashboard',
@@ -50,7 +16,7 @@ export class DashboardComponent {
   currentPage: number = 1;
 
   stats = [
-    { label: 'Mentors', value: 168, progress: 40, icon: 'fas fa-users', color: '#FFBC34' },
+    { label: 'Mentors', value: 168, progress: 40, icon: 'fas fa-user-friends', color: '#FFBC34' },
     { label: 'Learners', value: 487, progress: 60, icon: 'fas fa-users', color: '#118577' },
     { label: 'Sessions', value: 485, progress: 30, icon: 'fa-solid fa-camera', color: '#dc3545' }
   ]
@@ -207,7 +173,7 @@ export class DashboardComponent {
   }
 
 
-  sessions: Session[] = [
+  sessions: session[] = [
     {
       id: 1,
       Title: 'Frontend Developer',

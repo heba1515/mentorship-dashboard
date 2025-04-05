@@ -1,20 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { mentor } from '../interfaces/mentor';
 
-interface mentor {
-  id: number;
-  mentor: {
-    name: string;
-    image: string;
-    title: string;
-  }; 
-  date: string;
-  email: string;
-  phone: number;
-  status: 'active'  | 'pending';
-  earnd: number;
-}
 @Component({
   selector: 'app-mentors',
   imports: [CommonModule, FormsModule],
@@ -23,7 +11,7 @@ interface mentor {
 })
 
 export class MentorsComponent {
-  
+
 
   statusFilter: string = '';
 
@@ -224,7 +212,7 @@ export class MentorsComponent {
       earnd: 330.00
     }
   ];
-  
+
 
 
 
@@ -239,6 +227,6 @@ export class MentorsComponent {
 
     return filtered;
   }
-  
+
 
 }

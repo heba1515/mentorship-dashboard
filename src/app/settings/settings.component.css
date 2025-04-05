@@ -1,0 +1,21 @@
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success {
+  background-color: #118577;
+  border: none;
+}
+
+.btn-outline-secondary {
+  border: 1px solid #ddd;
+}
+
+.input-group .btn {
+  border-radius: 0 5px 5px 0;
+}
+
+.btn-secondary{
+  background-color: #172E59;
+}

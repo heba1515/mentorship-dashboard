@@ -1,15 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Transaction {
-  id: string;
-  userId:number;
-  userImage: string;
-  userName: string;
-  totalAmount: number;
-  status: 'paid'  | 'unpaid';
-}
+import { transaction } from '../interfaces/transaction';
 
 @Component({
   selector: 'app-transactions',
@@ -20,7 +12,7 @@ interface Transaction {
 export class TransactionsComponent {
   statusFilter: string = '';
 
-  transactions: Transaction[] = [
+  transactions: transaction[] = [
     {
       id: 'IN0001',
       userId:1,

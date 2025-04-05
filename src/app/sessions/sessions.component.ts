@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-interface Session {
-  id: number;
-  Title:string;
-  Price: number;
-  MentorName: string;
-  Date: string;
-  status: 'active'  | 'pending';
-  Duration: number;
-}
+import { session } from '../interfaces/Session';
+
 @Component({
   selector: 'app-sessions',
   imports: [CommonModule, FormsModule],
@@ -17,13 +10,9 @@ interface Session {
   styleUrl: './sessions.component.css'
 })
 export class SessionsComponent {
-
-
-
-
   statusFilter: string = '';
 
-  sessions: Session[] = [
+  sessions: session[] = [
     {
       id: 1,
       Title: 'Frontend Developer',
@@ -159,26 +148,16 @@ export class SessionsComponent {
       status: 'active',
       Duration: 30
     }
-  ];
-  
+  ]
 
+  filteredSessions() {
+    let filtered = this.sessions;
 
+    if (this.statusFilter) {
+      filtered = filtered.filter(sessions => sessions.status === this.statusFilter);
+    }
 
-
-
- filteredSessions() {
-   let filtered = this.sessions;
-
-   if (this.statusFilter) {
-     filtered = filtered.filter(sessions => sessions.status === this.statusFilter);
-   }
-
-   return filtered;
- }
- 
-
-
-
-
+    return filtered;
+  }
 
 }

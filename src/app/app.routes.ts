@@ -4,6 +4,7 @@ import { UsersComponent } from './users/users.component';
 import { MentorsComponent } from './mentors/mentors.component';
 import { SessionsComponent } from './sessions/sessions.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
   {
@@ -31,5 +32,10 @@ export const routes: Routes = [
     path: 'transactions',
     component: TransactionsComponent,
     title: 'Transactions details',
-},
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    title: 'Settings details',
+  },
 ];

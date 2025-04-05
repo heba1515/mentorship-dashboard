@@ -1,0 +1,189 @@
+<h2>Settings</h2>
+<p>Dashboard / <span class="frist-color">Settings</span></p>
+
+<div class="container">
+  <h4 class="py-3">General Setting</h4>
+  <div class="row">
+    <!-- Left Side: Website Details -->
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h4 class="mb-3">Website Basic Details</h4>
+
+        <form [formGroup]="websiteForm" (ngSubmit)="updateWebsiteDetails()">
+          <div class="form-group">
+            <label>Website Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="websiteName" placeholder="Enter Website Name">
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Logo <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input type="file" class="form-control" (change)="onFileChange($event, 'logo')">
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Favicon <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input type="file" class="form-control" (change)="onFileChange($event, 'favicon')">
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-success me-3">Update</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+          </div>
+
+          <!-- Inline message for website form -->
+          <div class="mt-2">
+            @if(websiteMessage && websiteForm.valid) {
+            <small class="frist-color">{{ websiteMessage }}</small>
+            }
+            @if(websiteMessage && !websiteForm.valid) {
+            <small class="text-danger">{{ websiteMessage }}</small>
+            }
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Side: Address Details -->
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h4 class="mb-3">Address Details</h4>
+
+        <form [formGroup]="addressForm" (ngSubmit)="updateAddressDetails()">
+          <div class="form-group">
+            <label>Address Line 1 <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="addressLine1" placeholder="Enter Address Line 1">
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Address Line 2 <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="addressLine2" placeholder="Enter Address Line 2">
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>City <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="city">
+            </div>
+            <div class="col-md-6">
+              <label>Country <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="country">
+                <option value="" disabled>Select</option>
+                @for(country of countries; track $index) {
+                <option [value]="country">{{ country }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-success me-3">Update</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+          </div>
+
+          <!-- Inline message for address form -->
+          <div class="mt-2">
+            @if(addressMessage && addressForm.valid) {
+            <small class="frist-color">{{ addressMessage }}</small>
+            }
+            @if(addressMessage && !addressForm.valid) {
+            <small class="text-danger">{{ addressMessage }}</small>
+            }
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h4 class="py-3 mt-3">Localization</h4>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h4 class="mb-3">Localization Details</h4>
+
+        <form [formGroup]="localizationForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Time Zone</label>
+            <select class="form-select" formControlName="timeZone">
+              @for(tz of timeZones; track $index) {
+              <option>{{ tz }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Date Format</label>
+            <select class="form-select" formControlName="dateFormat">
+              @for(df of dateFormats; track $index) {
+              <option>{{ df }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Time Format</label>
+            <select class="form-select" formControlName="timeFormat">
+              @for(tf of timeFormats; track $index) {
+              <option>{{ tf }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Currency Symbol</label>
+            <select class="form-select" formControlName="currencySymbol">
+              @for(cs of currencySymbols; track $index) {
+              <option>{{ cs }}</option>
+              }
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success mt-4">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <h4 class="py-3 mt-3">Social Links</h4>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h4>Social Link Settings</h4>
+
+        <form [formGroup]="socialForm" (ngSubmit)="onSubmitLink()">
+          <div formArrayName="links">
+            @for(group of links.controls; track $index; let i = $index) {
+            <div [formGroupName]="i" class="d-flex align-items-center mb-3">
+              <button class="btn btn-success me-2" type="button">
+                <i class="fab" [ngClass]="group.get('icon')?.value"></i>
+              </button>
+              <input type="url" class="form-control me-2" formControlName="url"
+                [placeholder]="group.get('placeholder')?.value" />
+              <button class="btn btn-danger" type="button" (click)="removeLink(i)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+            }
+          </div>
+
+          <button type="button" class="btn btn-secondary mb-3" (click)="addLink()">
+            + Add More
+          </button>
+
+          <div>
+            <button type="submit" class="btn btn-success me-2">Submit</button>
+            <button type="button" class="btn btn-outline-dark">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
