@@ -5,6 +5,7 @@ import { MentorsComponent } from './mentors/mentors.component';
 import { SessionsComponent } from './sessions/sessions.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -37,5 +38,10 @@ export const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     title: 'Settings details',
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    title: 'Profile details',
   },
 ];

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { mentor } from '../interfaces/mentor';
 import { user } from '../interfaces/user';
-import { session } from '../interfaces/Session';
+import { session } from '../interfaces/session';
 
 @Component({
   selector: 'app-dashboard',

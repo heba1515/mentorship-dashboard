@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { session } from '../interfaces/Session';
+import { session } from '../interfaces/session';
 
 @Component({
   selector: 'app-sessions',
