@@ -2,24 +2,41 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-interface Booking {
+interface mentor {
   id: number;
   mentor: {
     name: string;
     image: string;
     title: string;
   };
-  course: string;
-  mentee: {
+  date: string;
+  email: string;
+  phone: number;
+  status: 'active'  | 'pending';
+  earnd: number;
+}
+
+interface user {
+  id: number;
+  user: {
     name: string;
     image: string;
-    level: string;
+    title: string;
   };
-  date: Date;
-  startTime: string;
-  endTime: string;
-  status: 'completed' | 'upcoming' | 'cancelled';
-  amount: number;
+  date: string;
+  email: string;
+  phone: number;
+  status: 'active'  | 'pending';
+}
+
+interface Session {
+  id: number;
+  Title: string;
+  Price: number;
+  MentorName: string;
+  Date: string;
+  status: 'active' | 'pending';
+  Duration: number;
 }
 
 @Component({
@@ -32,133 +49,230 @@ export class DashboardComponent {
   statusFilter: string = '';
   currentPage: number = 1;
 
-  mentors = [
-    { name: 'James Amen', title: 'Frontend Developer', rating: 4, image: 'profile-img.png' },
-    { name: 'Jessica Fogarty', title: 'Data Analysis', rating: 4, image: 'profile-img.png' },
-    { name: 'Jose Anderson', title: 'Backend Developer', rating: 4, image: 'profile-img.png' },
-    { name: 'Sofia Brient', title: 'Flutter Developer', rating: 4, image: 'profile-img.png' },
-    { name: 'Marvin Campbell', title: 'UX/UI Designer', rating: 4, image: 'profile-img.png' }
-  ];
+  stats = [
+    { label: 'Mentors', value: 168, progress: 40, icon: 'fas fa-users', color: '#FFBC34' },
+    { label: 'Learners', value: 487, progress: 60, icon: 'fas fa-users', color: '#118577' },
+    { label: 'Sessions', value: 485, progress: 30, icon: 'fa-solid fa-camera', color: '#dc3545' }
+  ]
 
-  learners = [
-    { name: 'Jonathan Doe', phone: '8286329170', lastVisit: '20 Oct 2019', image: 'profile-img.png' },
-    { name: 'Julie Pennington', phone: '2077299974', lastVisit: '22 Oct 2019', image: 'profile-img.png' },
-    { name: 'Tyrone Roberts', phone: '2607247769', lastVisit: '21 Oct 2019', image: 'profile-img.png' },
-    { name: 'Allen Davis', phone: '5043686874', lastVisit: '21 Sep 2019', image: 'profile-img.png' },
-    { name: 'Patricia Manzi', phone: '9548207887', lastVisit: '18 Sep 2019', image: 'profile-img.png' }
-  ];
-
-  getStars(rating: number): boolean[] {
-    return Array(5).fill(false).map((_, i) => i < rating);
-  }
-
-
-  bookings: Booking[] = [
+  mentors: mentor[] = [
     {
       id: 1,
       mentor: {
         name: 'James Amen',
         image: 'profile-img.png',
-        title: 'Mathematics'
+        title: 'Frontend Developer'
       },
-      course: 'Maths',
-      mentee: {
-        name: 'Jonathan Doe',
-        image: 'profile-img.png',
-        level: 'Intermediate'
-      },
-      date: new Date('2019-11-09'),
-      startTime: '11:00 AM',
-      endTime: '11:15 AM',
-      status: 'completed',
-      amount: 200.00
+      date: '2019-11-09',
+      email: 'james.amen@example.com',
+      phone: 1234567890,
+      status: 'active',
+      earnd: 200.00
     },
     {
       id: 2,
       mentor: {
-        name: 'Jessica Fogarty',
+        name: 'Sophia Lee',
         image: 'profile-img.png',
-        title: 'Business Mathematics'
+        title: 'Data Scientist'
       },
-      course: 'Business Maths',
-      mentee: {
-        name: 'Julie Pennington',
-        image: 'profile-img.png',
-        level: 'Advanced'
-      },
-      date: new Date('2019-11-05'),
-      startTime: '11:00 AM',
-      endTime: '11:35 AM',
-      status: 'completed',
-      amount: 300.00
+      date: '2019-11-10',
+      email: 'sophia.lee@example.com',
+      phone: 1234567891,
+      status: 'pending',
+      earnd: 180.00
     },
     {
       id: 3,
       mentor: {
-        name: 'Jose Anderson',
+        name: 'Mohamed Salim',
         image: 'profile-img.png',
-        title: 'Algebra'
+        title: 'Backend Developer'
       },
-      course: 'Algebra',
-      mentee: {
-        name: 'Tyrone Roberts',
-        image: 'profile-img.png',
-        level: 'Beginner'
-      },
-      date: new Date('2019-11-11'),
-      startTime: '12:00 PM',
-      endTime: '12:15 PM',
-      status: 'upcoming',
-      amount: 150.00
+      date: '2019-11-11',
+      email: 'mohamed.salim@example.com',
+      phone: 1234567892,
+      status: 'active',
+      earnd: 250.00
     },
     {
       id: 4,
       mentor: {
-        name: 'Sofia Brient',
+        name: 'Elena Gilbert',
         image: 'profile-img.png',
-        title: 'Integrated Mathematics'
+        title: 'UI/UX Designer'
       },
-      course: 'Integrated Sum',
-      mentee: {
-        name: 'Allen Davis',
-        image: 'profile-img.png',
-        level: 'Intermediate'
-      },
-      date: new Date('2019-11-07'),
-      startTime: '1:00 PM',
-      endTime: '1:20 PM',
-      status: 'completed',
-      amount: 150.00
+      date: '2019-11-12',
+      email: 'elena.gilbert@example.com',
+      phone: 1234567893,
+      status: 'pending',
+      earnd: 210.00
     },
     {
       id: 5,
       mentor: {
-        name: 'Marvin Campbell',
+        name: 'Ali Khan',
         image: 'profile-img.png',
-        title: 'Flow Charts'
+        title: 'DevOps Engineer'
       },
-      course: 'Flow chart',
-      mentee: {
-        name: 'Patricia Manzi',
-        image: 'profile-img.png',
-        level: 'Advanced'
-      },
-      date: new Date('2019-11-15'),
-      startTime: '2:00 PM',
-      endTime: '2:30 PM',
-      status: 'upcoming',
-      amount: 200.00
-    }
-  ];
+      date: '2019-11-13',
+      email: 'ali.khan@example.com',
+      phone: 1234567894,
+      status: 'active',
+      earnd: 300.00
+    },
+  ]
 
-  filteredBookings() {
-    let filtered = this.bookings;
+  filteredMentors() {
+    let filtered = this.mentors;
 
     if (this.statusFilter) {
-      filtered = filtered.filter(booking => booking.status === this.statusFilter);
+      filtered = filtered.filter(mentors => mentors.status === this.statusFilter);
     }
 
     return filtered;
   }
-  
+
+  users: user[] = [
+    {
+      id: 1,
+      user: {
+        name: 'James Amen',
+        image: 'profile-img.png',
+        title: 'Frontend Developer'
+      },
+      date: '2019-11-09',
+      email: 'james.amen@example.com',
+      phone: 1234567890,
+      status: 'active',
+    },
+    {
+      id: 2,
+      user: {
+        name: 'Sophia Lee',
+        image: 'profile-img.png',
+        title: 'Data Scientist'
+      },
+      date: '2019-11-10',
+      email: 'sophia.lee@example.com',
+      phone: 1234567891,
+      status: 'pending',
+    },
+    {
+      id: 3,
+      user: {
+        name: 'Mohamed Salim',
+        image: 'profile-img.png',
+        title: 'Backend Developer'
+      },
+      date: '2019-11-11',
+      email: 'mohamed.salim@example.com',
+      phone: 1234567892,
+      status: 'active',
+    },
+    {
+      id: 4,
+      user: {
+        name: 'Elena Gilbert',
+        image: 'profile-img.png',
+        title: 'UI/UX Designer'
+      },
+      date: '2019-11-12',
+      email: 'elena.gilbert@example.com',
+      phone: 1234567893,
+      status: 'pending',
+    },
+    {
+      id: 5,
+      user: {
+        name: 'Ali Khan',
+        image: 'profile-img.png',
+        title: 'DevOps Engineer'
+      },
+      date: '2019-11-13',
+      email: 'ali.khan@example.com',
+      phone: 1234567894,
+      status: 'active',
+    },
+  ]
+
+  filteredUsers() {
+    let filtered = this.users;
+
+    if (this.statusFilter) {
+      filtered = filtered.filter(users => users.status === this.statusFilter);
+    }
+
+    return filtered;
+  }
+
+
+  sessions: Session[] = [
+    {
+      id: 1,
+      Title: 'Frontend Developer',
+      Price: 200.00,
+      MentorName: 'James Amen',
+      Date: '2019-11-09',
+      status: 'active',
+      Duration: 30
+    },
+    {
+      id: 2,
+      Title: 'Data Scientist',
+      Price: 180.00,
+      MentorName: 'Sophia Lee',
+      Date: '2019-11-10',
+      status: 'pending',
+      Duration: 30
+    },
+    {
+      id: 3,
+      Title: 'Backend Developer',
+      Price: 250.00,
+      MentorName: 'Mohamed Salim',
+      Date: '2019-11-11',
+      status: 'active',
+      Duration: 30
+    },
+    {
+      id: 4,
+      Title: 'UI/UX Designer',
+      Price: 210.00,
+      MentorName: 'Elena Gilbert',
+      Date: '2019-11-12',
+      status: 'pending',
+      Duration: 30
+    },
+    {
+      id: 5,
+      Title: 'DevOps Engineer',
+      Price: 300.00,
+      MentorName: 'Ali Khan',
+      Date: '2019-11-13',
+      status: 'active',
+      Duration: 30
+    },
+    {
+      id: 6,
+      Title: 'Cybersecurity Expert',
+      Price: 270.00,
+      MentorName: 'Lily Evans',
+      Date: '2019-11-14',
+      status: 'pending',
+      Duration: 30
+    },
+  ]
+
+
+  filteredSessions() {
+    let filtered = this.sessions;
+
+    if (this.statusFilter) {
+      filtered = filtered.filter(sessions => sessions.status === this.statusFilter);
+    }
+
+    return filtered;
+  }
+
 }

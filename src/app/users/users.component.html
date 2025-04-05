@@ -1,1 +1,75 @@
-<p>users works!</p>
+<!-- users Table -->
+<h2>Users</h2>
+<p>Dashboard / <span class="frist-color">Users</span></p>
+
+<div class="card rounded">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col " class="ps-4 second-color">User Name</th>
+            <th scope="col">Member Since</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Status</th>
+            <th scope="col">Account Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(user of users; track user.id; let i = $index){
+          <tr>
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <img [src]="user.user.image" [alt]="user.user.name" class="avatar rounded-circle me-3">
+                <div>
+                  <div class="fw-semibold">{{ user.user.name }}</div>
+                  <small class="text-muted">{{ user.user.title }}</small>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span class="badge text-dark fw-bold">{{ user.date }}</span>
+            </td>
+
+            <td>
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="fw-semibold">{{ user.email }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div>{{ user.phone }}</div>
+            </td>
+
+            <td>
+              <span class="badge" [ngClass]="{
+                    'bgact': user.status === 'active',
+                    'bgpend': user.status === 'pending'
+                  }">
+                {{ user.status | titlecase }}
+              </span>
+            </td>
+
+            <td>
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+              </label>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">
+              No users found
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -97,3 +97,33 @@ th {
 .bgpend {
   background-color: #172E59;
 }
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background-color: #e6f9e6;
+}
+
+.delete-btn {
+  background-color: #fde8e8;
+  color: #dc3545;
+}
+
+i {
+  font-size: 16px;
+}

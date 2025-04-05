@@ -1,0 +1,83 @@
+<!-- Transactions Table -->
+<h2>Transactions</h2>
+<p>Dashboard / <span class="frist-color">Transactions</span></p>
+
+<div class="card rounded">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col " class="ps-4 second-color">Invoice Number</th>
+            <th scope="col">User ID</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(transaction of transactions; track transaction.id; let i = $index){
+          <tr>
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="frist-color">#{{ transaction.id }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div>#{{ transaction.userId }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <img [src]="transaction.userImage" [alt]="transaction.userName" class="avatar rounded-circle me-3">
+                <div>
+                  <div class="fw-semibold">{{ transaction.userName }}</div>
+                  <!-- <small class="text-muted">{{ transaction.userTitle }}</small> -->
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div>${{ transaction.totalAmount | number:'1.2-2' }}</div>
+            </td>
+
+            <td>
+              <span class="badge" [ngClass]="{
+                    'bgact': transaction.status === 'paid',
+                    'bgpend': transaction.status === 'unpaid'
+                  }">
+                {{ transaction.status | titlecase }}
+              </span>
+            </td>
+
+            <td>
+              <div class="button-container">
+                <button class="edit-btn frist-color">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="delete-btn">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">
+              No users found
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
