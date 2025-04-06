@@ -1,13 +1,17 @@
-<div class="layout">
-  <header class="header">
-    <app-header></app-header>
-  </header>
+@if(isLoggedIn) {
+  <div class="layout">
+    <header class="header">
+      <app-header></app-header>
+    </header>
 
-  <aside class="sidebar">
-    <app-sidebar></app-sidebar>
-  </aside>
+    <aside class="sidebar">
+      <app-sidebar></app-sidebar>
+    </aside>
 
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
-</div>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+} @else {
+  <app-login></app-login>
+}

@@ -14,9 +14,24 @@
         <i class="fa-regular fa-bell"></i>
         <span class="badge position-absolute top-0 start-100 translate-middle">3</span>
       </div>
-      <a routerLink="/profile" routerLinkActive="active_link">
-        <img src="profile-img.png" alt="User Avatar" class="avatar">
-      </a>
+      <div class="dropdown" [class.show]="isOpen">
+        <button class="btn p-0 border-0 bg-transparent d-flex align-items-center" (click)="toggleDropdown()">
+          <img src="profile-img.png" class="rounded-circle" width="36" height="36" alt="Profile" />
+          <i class="fas fa-chevron-down ms-2"></i>
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-end mt-2 shadow" [class.show]="isOpen">
+          <div class="d-flex align-items-center p-3 border-bottom">
+            <img src="profile-img.png" class="rounded-circle me-2" width="40" height="40" alt="User" />
+            <div>
+              <div class="fw-semibold">Allen Davis</div>
+              <small class="text-muted">Administrator</small>
+            </div>
+          </div>
+          <a class="dropdown-item" routerLink="/profile" routerLinkActive="active_link">My Profile</a>
+          <button class="dropdown-item text-danger" (click)="logout()">Logout</button>
+        </div>
+    </div>
     </div>
   </div>
 </nav>
