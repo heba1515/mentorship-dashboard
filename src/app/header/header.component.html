@@ -16,14 +16,14 @@
       </div>
       <div class="dropdown" [class.show]="isOpen">
         <button class="btn p-0 border-0 bg-transparent d-flex align-items-center" (click)="toggleDropdown()">
-          <img src="adminDetails?.image || 'profile-img.png'" class="rounded-circle" width="36" height="36"
+          <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')" class="rounded-circle" width="36" height="36"
             alt="Profile" />
           <i class="fas fa-chevron-down ms-2"></i>
         </button>
 
         <div class="dropdown-menu dropdown-menu-end mt-2 shadow" [class.show]="isOpen">
           <div class="d-flex align-items-center p-3 border-bottom">
-            <img src="adminDetails?.image || 'profile-img.png'" class="rounded-circle me-2" width="40" height="40"
+            <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')" class="rounded-circle me-2" width="40" height="40"
               alt="Admin" />
             <div>
               <div class="fw-semibold">{{ adminDetails?.name }}</div>

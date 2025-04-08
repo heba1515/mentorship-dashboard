@@ -21,7 +21,7 @@
           <tr>
             <td class="ps-4">
               <div class="d-flex align-items-center">
-                <img [src]="mentor.image || 'profile-img.png'" [alt]="mentor.name" class="avatar rounded-circle me-3">
+                <img [src]="'http://localhost:3000/img/users/' + (mentor.image || 'profile-img.png')" [alt]="mentor.name" class="avatar rounded-circle me-3">
                 <div>
                   <div class="fw-semibold">{{ mentor.name }}</div>
                   <small class="text-muted">{{ mentor.title }}</small>
@@ -48,7 +48,7 @@
             <td>
               <span class="badge" [ngClass]="{
                     'bgact': mentor.status === 'active',
-                    'bgpend': mentor.status === 'pending'
+                    'bgpend': mentor.status === 'inactive'
                   }">
                 {{ mentor.status | titlecase }}
               </span>

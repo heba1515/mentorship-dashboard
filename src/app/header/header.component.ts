@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  isOpen = false;
+  isOpen: boolean = false;
   adminDetails: any;
 
   constructor(private authService: AuthService) { }
@@ -22,8 +22,20 @@ export class HeaderComponent {
     this.isOpen = !this.isOpen;
   }
 
-  closeDropdown() {
-    this.isOpen = false;
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const dropdownButton = document.querySelector('.dropdown button');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    if (
+      dropdownButton &&
+      dropdownMenu &&
+      !dropdownButton.contains(target) &&
+      !dropdownMenu.contains(target)
+    ) {
+      this.isOpen = false;
+    }
   }
 
   logout() {

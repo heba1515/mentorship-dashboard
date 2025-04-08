@@ -43,7 +43,8 @@
                 <tr>
                   <td class="ps-4">
                     <div class="d-flex align-items-center">
-                      <img [src]="mentor.image || 'profile-img.png'" [alt]="mentor.name" class="avatar rounded-circle me-3">
+                      <img [src]="'http://localhost:3000/img/users/' + (mentor?.image || 'profile-img.png')"
+                        [alt]="mentor.name" class="avatar rounded-circle me-3">
                       <div>
                         <div class="fw-semibold">{{ mentor.name }}</div>
                         <small class="text-muted">{{ mentor.title }}</small>
@@ -97,7 +98,7 @@
                 <tr>
                   <td class="ps-4">
                     <div class="d-flex align-items-center">
-                      <img [src]="user.image || 'profile-img.png'" [alt]="user.name" class="avatar rounded-circle me-3">
+                      <img [src]="'http://localhost:3000/img/users/' + (user?.image || 'profile-img.png')" [alt]="user.name" class="avatar rounded-circle me-3">
                       <div>
                         <div class="fw-semibold">{{ user.name }}</div>
                         <small class="text-muted">{{ user.title }}</small>

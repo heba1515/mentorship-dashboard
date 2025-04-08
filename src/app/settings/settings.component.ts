@@ -13,9 +13,14 @@ export class SettingsComponent {
   addressForm: FormGroup;
   localizationForm: FormGroup;
   socialForm: FormGroup;
+  newAdminForm: FormGroup;
 
   websiteMessage: string = '';
   addressMessage: string = '';
+  adminMessage: string = '';
+  isAdminAdded: boolean = false;
+
+  isSuperAdmin: boolean = false;
 
   countries: string[] = [
     'Egypt',
@@ -67,9 +72,26 @@ export class SettingsComponent {
       links: this.fb.array([])
     });
 
+    this.newAdminForm = this.fb.group({
+      image: [null],
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{10,15}$/)]],
+      // password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+
     for (const option of this.iconOptions) {
       this.addLink(option);
     }
+  }
+
+  ngOnInit() {
+    this.isSuperAdmin = this.checkIfSuperAdmin();
+  }
+
+  checkIfSuperAdmin(): boolean {
+    const adminDetails = JSON.parse(localStorage.getItem('adminDetails') || '{}');
+    return adminDetails.isSuperAdmin || false;
   }
 
   updateWebsiteDetails() {
@@ -156,5 +178,28 @@ export class SettingsComponent {
     } else {
       console.error('Form is invalid');
     }
+  }
+
+  addAdmin() {
+    if (this.newAdminForm.valid) {
+      const formData = new FormData();
+      Object.keys(this.newAdminForm.value).forEach((key) => {
+        formData.append(key, this.newAdminForm.value[key]);
+      });
+
+      console.log('New Admin Data:', this.newAdminForm.value);
+
+      this.isAdminAdded = true;
+      this.adminMessage = 'Admin added successfully!';
+      this.newAdminForm.reset();
+    } else {
+      this.isAdminAdded = false;
+      this.adminMessage = 'Please fill in all required fields correctly.';
+    }
+  }
+
+  cancelNewAdmin() {
+    this.newAdminForm.reset();
+    this.adminMessage = '';
   }
 }

@@ -2,7 +2,7 @@
 <p>Dashboard / <span class="frist-color">Profile</span></p>
 <div class="container">
   <div class="d-flex align-items-center mb-3">
-    <img [src]="adminDetails?.image || 'profile-img.png'" class="profile-img me-3" alt="Profile" />
+    <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')" class="profile-img me-3" alt="Profile" />
     <div>
       <h4>{{ adminDetails?.name }}</h4>
       <p class="text-muted mb-1">{{ adminDetails?.email }}</p>
