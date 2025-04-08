@@ -18,7 +18,6 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['User', Validators.required],
       rememberMe: [false]
     });
   }
@@ -29,17 +28,14 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password, role } = this.loginForm.value;
+      const { email, password } = this.loginForm.value;
+      const role = 'Admin'; 
 
       this.authService.login(email, password, role).subscribe(
         (response) => {
           if (response) {
-            const userRole = response.role;
-            localStorage.setItem('role', userRole);
-
-            if (userRole === 'Admin') {
-              this.router.navigate(['/dashboard']);
-            }
+            localStorage.setItem('role', role);
+            this.router.navigate(['/dashboard']);
           } else {
             alert('Invalid email or password');
           }

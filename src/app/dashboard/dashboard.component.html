@@ -29,6 +29,11 @@
       <div class="card shadow-sm rounded-3">
         <h5 class="card-header bg-white">Mentor List</h5>
         <div class="card-body p-0">
+          @if(isLoading) {
+            <app-spinner></app-spinner>
+          }
+      
+          @if(!isLoading){
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead>
@@ -76,6 +81,7 @@
               </tbody>
             </table>
           </div>
+          }
         </div>
       </div>
     </div>
@@ -85,6 +91,11 @@
       <div class="card shadow-sm rounded-3">
         <h5 class="card-header bg-white">Learner List</h5>
         <div class="card-body p-0">
+          @if(isLoading) {
+            <app-spinner></app-spinner>
+          }
+      
+          @if(!isLoading){
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead>
@@ -120,6 +131,7 @@
               </tbody>
             </table>
           </div>
+          }
         </div>
       </div>
     </div>
@@ -132,6 +144,11 @@
 
     <!-- Booking Table -->
     <div class="card-body p-0">
+      @if(isLoading) {
+        <app-spinner></app-spinner>
+      }
+  
+      @if(!isLoading){
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
           <thead>
@@ -193,6 +210,7 @@
           </tbody>
         </table>
       </div>
+      }
     </div>
   </div>
 </div>

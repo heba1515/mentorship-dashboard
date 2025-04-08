@@ -1,10 +1,10 @@
 export interface transaction {
   _id: string;
-  session: {
+  session?: {
     _id: string;
     title: string;
-    mentor: string;
-    price: number;
+    mentor?: string;
+    price?: number;
     description: string;
     duration: number;
     schedule_time: string;

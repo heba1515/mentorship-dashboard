@@ -4,6 +4,11 @@
 
 <div class="card rounded">
   <div class="card-body p-0">
+    @if(isLoading) {
+      <app-spinner></app-spinner>
+    }
+
+    @if(!isLoading){
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
         <thead>
@@ -53,5 +58,7 @@
         </tbody>
       </table>
     </div>
+    }
   </div>
 </div>
+
