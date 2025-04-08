@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,13 +8,14 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, 
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   activeTab = 'about';
   passwordForm: FormGroup;
   editForm: FormGroup;
   isEditing = false;
+  adminDetails: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.passwordForm = this.fb.group({
       oldPassword: ['', [Validators.required]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
@@ -21,25 +23,27 @@ export class ProfileComponent {
     }, { validator: this.passwordMatchValidator });
 
     this.editForm = this.fb.group({
-      name: [this.admin.name, [Validators.required]],
-      dob: [this.admin.dob, [Validators.required]],
-      contactEmail: [this.admin.contactEmail, [Validators.required, Validators.email]],
-      phone: [this.admin.phone, [Validators.required, Validators.pattern(/^\d+$/)]],
-      address: [this.admin.address, [Validators.required]]
+      name: ['', [Validators.required]],
+      dob: ['', [Validators.required]],
+      contactEmail: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      address: ['', [Validators.required]]
     });
   }
 
-  admin = {
-    name: 'Allen Davis',
-    email: 'allendavis@admin.com',
-    location: 'Florida, United States',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    dob: '24 Jul 1983',
-    contactEmail: 'allendavis@example.com',
-    phone: '305-310-5857',
-    address: `4663 Agriculture Lane,\nMiami,\nFlorida - 33165,\nUnited States.`,
-    profileImage: 'profile-img.png'
-  };
+  ngOnInit() {
+    this.adminDetails = this.authService.getAdminDetails();
+
+    if (this.adminDetails) {
+      this.editForm.patchValue({
+        name: this.adminDetails.name,
+        dob: this.adminDetails.dob || '',
+        contactEmail: this.adminDetails.email,
+        phone: this.adminDetails.phone,
+        address: this.adminDetails.address || ''
+      });
+    }
+  }
 
   toggleTab(tab: string) {
     this.activeTab = tab;
@@ -67,28 +71,30 @@ export class ProfileComponent {
       return;
     }
 
-    console.log('Form submitted', this.passwordForm.value);
+    console.log('Password form submitted', this.passwordForm.value);
 
     this.passwordForm.reset();
   }
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
-    if (!this.isEditing) {
+    if (!this.isEditing && this.adminDetails) {
       this.editForm.reset({
-        name: this.admin.name,
-        dob: this.admin.dob,
-        contactEmail: this.admin.contactEmail,
-        phone: this.admin.phone,
-        address: this.admin.address
+        name: this.adminDetails.name,
+        dob: this.adminDetails.dob || '',
+        contactEmail: this.adminDetails.email,
+        phone: this.adminDetails.phone,
+        address: this.adminDetails.address || ''
       });
     }
   }
 
   saveDetails() {
     if (this.editForm.valid) {
-      this.admin = { ...this.admin, ...this.editForm.value };
+      this.adminDetails = { ...this.adminDetails, ...this.editForm.value };
       this.isEditing = false;
+
+      console.log('Updated user details:', this.adminDetails);
     }
   }
 }

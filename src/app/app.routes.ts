@@ -6,53 +6,61 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/profile.component';
-import { LoginComponent } from './login/login.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
     path: 'login',
-    component: LoginComponent,
-    title: 'Login'
+    component: AuthLayoutComponent,
+    title: 'Auth Layout',
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
-    title: 'Dashboard',
-  },
-  {
-    path: 'users',
-    component: UsersComponent,
-    title: 'Users details',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: DashboardComponent,
+        title: 'Dashboard',
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        title: 'Users details',
 
-  },
-  {
-    path: 'mentors',
-    component: MentorsComponent,
-    title: 'Mentors details',
-  },
-  {
-    path: 'sessions',
-    component: SessionsComponent,
-    title: 'Sessions details',
-  },
-  {
-    path: 'transactions',
-    component: TransactionsComponent,
-    title: 'Transactions details',
-  },
-  {
-    path: 'settings',
-    component: SettingsComponent,
-    title: 'Settings details',
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    title: 'Profile details',
-  },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
+      },
+      {
+        path: 'mentors',
+        component: MentorsComponent,
+        title: 'Mentors details',
+      },
+      {
+        path: 'sessions',
+        component: SessionsComponent,
+        title: 'Sessions details',
+      },
+      {
+        path: 'transactions',
+        component: TransactionsComponent,
+        title: 'Transactions details',
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        title: 'Settings details',
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        title: 'Profile details',
+      },
+    ],
+    title: 'Dashboard Layout',
   },
 ];

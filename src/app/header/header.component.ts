@@ -10,8 +10,13 @@ import { AuthService } from '../services/auth.service';
 })
 export class HeaderComponent {
   isOpen = false;
+  adminDetails: any;
 
-  constructor(private authService : AuthService) {}
+  constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+    this.adminDetails = this.authService.getAdminDetails();
+  }
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;

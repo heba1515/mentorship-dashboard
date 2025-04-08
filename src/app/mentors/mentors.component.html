@@ -1,83 +1,69 @@
-   <!-- Mentors Table -->
-   <h2>Mentors</h2>
-   <p>Dashboard / <span class="frist-color">Mentor</span></p>
+<!-- Mentors Table -->
+<h2>Mentors</h2>
+<p>Dashboard / <span class="frist-color">Mentor</span></p>
 
-   <div class="card   rounded">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead>
-              <tr>
-                <th scope="col " class="ps-4 second-color">Mentor Name</th>
-                <th scope="col">Member Since</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Status</th>
-                <th scope="col" class="text-end pe-4">Earnd</th>
-                <th scope="col">Account Status</th>
+<div class="card   rounded">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col " class="ps-4 second-color">Mentor Name</th>
+            <th scope="col">Member Since</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Status</th>
 
-              </tr>
-            </thead>
-            <tbody>
-              @for(mentor of mentors; track mentor.id; let i = $index){
-              <tr>
-                <td class="ps-4">
-                  <div class="d-flex align-items-center">
-                    <img [src]="mentor.mentor.image" [alt]="mentor.mentor.name" class="avatar rounded-circle me-3">
-                    <div>
-                      <div class="fw-semibold">{{ mentor.mentor.name }}</div>
-                      <small class="text-muted">{{ mentor.mentor.title }}</small>
-                    </div>
-                  </div>
-                </td>
-    
-                <td>
-                  <span class="badge text-dark fw-bold">{{ mentor.date }}</span>
-                </td>
-    
-                <td>
-                  <div class="d-flex align-items-center">
-                    <div>
-                      <div class="fw-semibold">{{ mentor.email }}</div>
-                    </div>
-                  </div>
-                </td>
-    
-                <td>
-                  <div>{{ mentor.phone }}</div>
-                  <!-- <div class="text-muted small">{{ booking.startTime }} - {{ booking.endTime }}</div> -->
-                </td>
-    
-                <td>
-                  <span class="badge" [ngClass]="{
+          </tr>
+        </thead>
+        <tbody>
+          @for(mentor of mentors; track mentor._id; let i = $index){
+          <tr>
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <img [src]="mentor.image || 'profile-img.png'" [alt]="mentor.name" class="avatar rounded-circle me-3">
+                <div>
+                  <div class="fw-semibold">{{ mentor.name }}</div>
+                  <small class="text-muted">{{ mentor.title }}</small>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span class="badge text-dark fw-bold">{{ mentor.updatedAt }}</span>
+            </td>
+
+            <td>
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="fw-semibold">{{ mentor.email }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div>{{ mentor.phone }}</div>
+            </td>
+
+            <td>
+              <span class="badge" [ngClass]="{
                     'bgact': mentor.status === 'active',
                     'bgpend': mentor.status === 'pending'
                   }">
-                    {{ mentor.status | titlecase }}
-                  </span>
-                </td>
-    
-                <td class="text-end pe-4 fw-semibold">
-                  ${{ mentor.earnd | number:'1.2-2' }}
-                </td>
+                {{ mentor.status | titlecase }}
+              </span>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">
+              No mentors found
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-                <td>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                    </label>
-                </td>
-              </tr>
-              } @empty {
-              <tr>
-                <td colspan="6" class="text-center py-4 text-muted">
-                  No bookings found
-                </td>
-              </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-   </div>
+</div>

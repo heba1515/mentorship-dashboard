@@ -18,42 +18,39 @@
               </tr>
             </thead>
             <tbody>
-              @for(session of sessions; track session.id; let i = $index){
+              @for(session of sessions; track session._id; let i = $index){
               <tr>
                 <td class="ps-4">
                   <div class="d-flex align-items-center">
                     <div>
-                      <div class="fw-semibold">{{ session.id }}</div>
+                      <div class="fw-semibold">{{ session._id }}</div>
                     </div>
                   </div>
                 </td>
-    
+
                 <td>
-                  <span class="badge text-dark fw-bold">{{ session.Title }}</span>
+                  <span class="badge text-dark fw-bold">{{ session.title }}</span>
                 </td>
-    
+
                 <td>
                   <div class="d-flex align-items-center">
                     <div>
-                      <div class="fw-semibold">${{ session.Price | number:'1.2-2' }}</div>
+                      <div class="fw-semibold">${{ session.price | number:'1.2-2' }}</div>
                     </div>
                   </div>
                 </td>
-    
+
                 <td>
-                  <div>{{ session.MentorName }}</div>
+                  <div>{{ getMentorName(session.mentor) }}</div>
                 </td>
 
                 <td>
                     <div>
-                        {{ session.Date  }}
+                        {{ session.schedule_time  }}
 
                     </div>
-                    <div class="text-muted small">5:00 AM</div>
-
-  
                 </td>
-    
+
                 <td>
                   <span class="badge" [ngClass]="{
                     'bgact': session.status === 'active',
@@ -62,17 +59,15 @@
                     {{ session.status | titlecase }}
                   </span>
                 </td>
-    
-               
 
                 <td>
-                  <div>{{session.Duration}} minute</div>
+                  <div>{{session.duration}} minute</div>
                 </td>
               </tr>
               } @empty {
               <tr>
                 <td colspan="6" class="text-center py-4 text-muted">
-                  No bookings found
+                  No sessions found
                 </td>
               </tr>
               }

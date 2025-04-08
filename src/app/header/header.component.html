@@ -16,22 +16,24 @@
       </div>
       <div class="dropdown" [class.show]="isOpen">
         <button class="btn p-0 border-0 bg-transparent d-flex align-items-center" (click)="toggleDropdown()">
-          <img src="profile-img.png" class="rounded-circle" width="36" height="36" alt="Profile" />
+          <img src="adminDetails?.image || 'profile-img.png'" class="rounded-circle" width="36" height="36"
+            alt="Profile" />
           <i class="fas fa-chevron-down ms-2"></i>
         </button>
 
         <div class="dropdown-menu dropdown-menu-end mt-2 shadow" [class.show]="isOpen">
           <div class="d-flex align-items-center p-3 border-bottom">
-            <img src="profile-img.png" class="rounded-circle me-2" width="40" height="40" alt="User" />
+            <img src="adminDetails?.image || 'profile-img.png'" class="rounded-circle me-2" width="40" height="40"
+              alt="Admin" />
             <div>
-              <div class="fw-semibold">Allen Davis</div>
+              <div class="fw-semibold">{{ adminDetails?.name }}</div>
               <small class="text-muted">Administrator</small>
             </div>
           </div>
-          <a class="dropdown-item" routerLink="/profile" routerLinkActive="active_link">My Profile</a>
-          <button class="dropdown-item text-danger" (click)="logout()">Logout</button>
+          <a class="dropdown-item" routerLink="/dashboard/profile" routerLinkActive="active_link">My Profile</a>
+          <button class="dropdown-item text-danger" routerLink="/login" (click)="logout()">Logout</button>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </nav>

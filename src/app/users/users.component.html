@@ -12,25 +12,23 @@
             <th scope="col">Member Since</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
-            <th scope="col">Status</th>
-            <th scope="col">Account Status</th>
           </tr>
         </thead>
         <tbody>
-          @for(user of users; track user.id; let i = $index){
+          @for(user of users; track user._id; let i = $index){
           <tr>
             <td class="ps-4">
               <div class="d-flex align-items-center">
-                <img [src]="user.user.image" [alt]="user.user.name" class="avatar rounded-circle me-3">
+                <img [src]="user.image || 'profile-img.png'" [alt]="user.name" class="avatar rounded-circle me-3">
                 <div>
-                  <div class="fw-semibold">{{ user.user.name }}</div>
-                  <small class="text-muted">{{ user.user.title }}</small>
+                  <div class="fw-semibold">{{ user.name }}</div>
+                  <small class="text-muted">{{ user.title }}</small>
                 </div>
               </div>
             </td>
 
             <td>
-              <span class="badge text-dark fw-bold">{{ user.date }}</span>
+              <span class="badge text-dark fw-bold">{{ user.updatedAt }}</span>
             </td>
 
             <td>
@@ -43,22 +41,6 @@
 
             <td>
               <div>{{ user.phone }}</div>
-            </td>
-
-            <td>
-              <span class="badge" [ngClass]="{
-                    'bgact': user.status === 'active',
-                    'bgpend': user.status === 'pending'
-                  }">
-                {{ user.status | titlecase }}
-              </span>
-            </td>
-
-            <td>
-              <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-              </label>
             </td>
           </tr>
           } @empty {

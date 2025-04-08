@@ -1,12 +1,12 @@
 export interface user {
-  id: number;
-  user: {
-    name: string;
-    image: string;
-    title: string;
-  };
-  date: string;
+  _id: string;
+  image: string;
+  name: string;
   email: string;
-  phone: number;
-  status: 'active'  | 'pending';
+  phone: string;
+  title: string;
+  about: string;
+  skills: string[];
+  confirmEmail: boolean;
+  updatedAt: string;
 }

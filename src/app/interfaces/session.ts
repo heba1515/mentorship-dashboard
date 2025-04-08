@@ -1,9 +1,12 @@
 export interface session {
-  id: number;
-  Title: string;
-  Price: number;
-  MentorName: string;
-  Date: string;
-  status: 'active' | 'pending';
-  Duration: number;
+  _id: string;
+  title: string;
+  mentor: string;
+  price: number;
+  description: string;
+  duration: number;
+  schedule_time: string; 
+  status: string;
+  has_room: boolean;
+  recordings: string[];
 }

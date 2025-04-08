@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -18,6 +18,7 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['User', Validators.required],
       rememberMe: [false]
     });
   }
@@ -28,17 +29,28 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      const { email, password, role } = this.loginForm.value;
 
-      const isAuthenticated = this.authService.login(email, password);
+      this.authService.login(email, password, role).subscribe(
+        (response) => {
+          if (response) {
+            const userRole = response.role;
+            localStorage.setItem('role', userRole);
 
-      if (isAuthenticated) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        alert('Invalid email or password');
-      }
+            if (userRole === 'Admin') {
+              this.router.navigate(['/dashboard']);
+            }
+          } else {
+            alert('Invalid email or password');
+          }
+        },
+        (error) => {
+          console.error('Login error:', error);
+          alert('An error occurred during login. Please try again.');
+        }
+      );
     } else {
-      alert('Please fill in all required fields correctly'); 
+      alert('Please fill in all required fields correctly.');
     }
   }
 }

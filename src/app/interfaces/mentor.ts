@@ -1,13 +1,14 @@
 export interface mentor {
-  id: number;
-  mentor: {
-    name: string;
-    image: string;
-    title: string;
-  };
-  date: string;
+  _id: string;
+  image: string;
+  name: string;
   email: string;
-  phone: number;
-  status: 'active'  | 'pending';
-  earnd: number;
+  phone: string;
+  bio: string;
+  title: string;
+  status: string;
+  experience: string;
+  confirmEmail: boolean;
+  updatedAt: string;
+  skills: string[];
 }

@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <div class="py-3">
-    <h2>Welcome Admin!</h2>
+    <h2>Welcome {{ adminDetails?.name?.split(' ')[0] }}!</h2>
     <p>Dashboard</p>
 
     <div class="stats-container">
@@ -36,25 +36,23 @@
                   <th scope="col " class="ps-4 second-color">Mentor Name</th>
                   <th scope="col">Member Since</th>
                   <th scope="col">Status</th>
-                  <th scope="col" class="text-end pe-4">Earnd</th>
-
                 </tr>
               </thead>
               <tbody>
-                @for(mentor of mentors; track mentor.id; let i = $index){
+                @for(mentor of mentors | slice:0:5; track mentor._id; let i = $index){
                 <tr>
                   <td class="ps-4">
                     <div class="d-flex align-items-center">
-                      <img [src]="mentor.mentor.image" [alt]="mentor.mentor.name" class="avatar rounded-circle me-3">
+                      <img [src]="mentor.image || 'profile-img.png'" [alt]="mentor.name" class="avatar rounded-circle me-3">
                       <div>
-                        <div class="fw-semibold">{{ mentor.mentor.name }}</div>
-                        <small class="text-muted">{{ mentor.mentor.title }}</small>
+                        <div class="fw-semibold">{{ mentor.name }}</div>
+                        <small class="text-muted">{{ mentor.title }}</small>
                       </div>
                     </div>
                   </td>
 
                   <td>
-                    <span class="badge text-dark fw-bold">{{ mentor.date }}</span>
+                    <span class="badge text-dark fw-bold">{{ mentor.updatedAt }}</span>
                   </td>
 
                   <td>
@@ -64,10 +62,6 @@
                         }">
                       {{ mentor.status | titlecase }}
                     </span>
-                  </td>
-
-                  <td class="text-end pe-4 fw-semibold">
-                    ${{ mentor.earnd | number:'1.2-2' }}
                   </td>
 
                 </tr>
@@ -96,35 +90,24 @@
                 <tr>
                   <th scope="col " class="ps-4 second-color">User Name</th>
                   <th scope="col">Member Since</th>
-                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
-                @for(user of users; track user.id; let i = $index){
+                @for(user of users | slice:0:5; track user._id; let i = $index){
                 <tr>
                   <td class="ps-4">
                     <div class="d-flex align-items-center">
-                      <img [src]="user.user.image" [alt]="user.user.name" class="avatar rounded-circle me-3">
+                      <img [src]="user.image || 'profile-img.png'" [alt]="user.name" class="avatar rounded-circle me-3">
                       <div>
-                        <div class="fw-semibold">{{ user.user.name }}</div>
-                        <small class="text-muted">{{ user.user.title }}</small>
+                        <div class="fw-semibold">{{ user.name }}</div>
+                        <small class="text-muted">{{ user.title }}</small>
                       </div>
                     </div>
                   </td>
 
                   <td>
-                    <span class="badge text-dark fw-bold">{{ user.date }}</span>
+                    <span class="badge text-dark fw-bold">{{ user.updatedAt }}</span>
                   </td>
-
-                  <td>
-                    <span class="badge" [ngClass]="{
-                            'bgact': user.status === 'active',
-                            'bgpend': user.status === 'pending'
-                          }">
-                      {{ user.status | titlecase }}
-                    </span>
-                  </td>
-
                 </tr>
                 } @empty {
                 <tr>
@@ -144,17 +127,7 @@
 
 <div class="container py-3">
   <div class="card shadow-sm rounded-3">
-    <div class="card-header bg-white d-flex flex-column flex-md-row justify-content-between align-items-center">
-      <h5 class="mb-4 mb-md-0">Booking List</h5>
-      <!-- <div class="d-flex flex-column flex-sm-row gap-3">
-        <select class="form-select form-select-sm" style="width: 150px;" [(ngModel)]="statusFilter">
-          <option value="">All Statuses</option>
-          <option value="completed">Completed</option>
-          <option value="upcoming">Upcoming</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-      </div> -->
-    </div>
+    <h5 class="card-header bg-white">Booking List</h5>
 
     <!-- Booking Table -->
     <div class="card-body p-0">
@@ -162,7 +135,6 @@
         <table class="table table-hover align-middle mb-0">
           <thead>
             <tr>
-              <th scope="col">Sessions Id</th>
               <th scope="col " class="ps-4 second-color">Session Title</th>
               <th scope="col">Sessions Price</th>
               <th scope="col">Mentor Name </th>
@@ -173,40 +145,28 @@
             </tr>
           </thead>
           <tbody>
-            @for(session of sessions; track session.id; let i = $index){
+            @for(session of sessions | slice:0:5; track session._id; let i = $index){
             <tr>
-              <td class="ps-4">
-                <div class="d-flex align-items-center">
-                  <div>
-                    <div class="fw-semibold">{{ session.id }}</div>
-                  </div>
-                </div>
-              </td>
-
               <td>
-                <span class="badge text-dark fw-bold">{{ session.Title }}</span>
+                <span class="badge text-dark fw-bold">{{ session.title }}</span>
               </td>
 
               <td>
                 <div class="d-flex align-items-center">
                   <div>
-                    <div class="fw-semibold">${{ session.Price | number:'1.2-2' }}</div>
+                    <div class="fw-semibold">${{ session.price | number:'1.2-2' }}</div>
                   </div>
                 </div>
               </td>
 
               <td>
-                <div>{{ session.MentorName }}</div>
+                <div>{{ getMentorName(session.mentor) }}</div>
               </td>
 
               <td>
                 <div>
-                  {{ session.Date }}
-
+                  {{ session.schedule_time }}
                 </div>
-                <div class="text-muted small">5:00 AM</div>
-
-
               </td>
 
               <td>
@@ -218,10 +178,8 @@
                 </span>
               </td>
 
-
-
               <td>
-                <div>{{session.Duration}} minute</div>
+                <div>{{session.duration}} minute</div>
               </td>
             </tr>
             } @empty {
