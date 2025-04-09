@@ -8,6 +8,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { ChatLayoutComponent } from './layouts/chat-layout/chat-layout.component';
+import { AdminsComponent } from './admins/admins.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +30,12 @@ export const routes: Routes = [
         path: '',
         component: DashboardComponent,
         title: 'Dashboard',
+      },
+      {
+        path: 'admins',
+        component: AdminsComponent,
+        title: 'Admins details',
+
       },
       {
         path: 'users',
@@ -62,5 +70,10 @@ export const routes: Routes = [
       },
     ],
     title: 'Dashboard Layout',
+  },
+  {
+    path: 'chat',
+    component: ChatLayoutComponent,
+    title: 'Chat Layout',
   },
 ];

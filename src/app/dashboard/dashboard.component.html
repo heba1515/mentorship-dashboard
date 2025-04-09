@@ -32,7 +32,7 @@
           @if(isLoading) {
             <app-spinner></app-spinner>
           }
-      
+
           @if(!isLoading){
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -64,7 +64,7 @@
                   <td>
                     <span class="badge" [ngClass]="{
                           'bgact': mentor.status === 'active',
-                          'bgpend': mentor.status === 'pending'
+                          'bgpend': mentor.status === 'inactive'
                         }">
                       {{ mentor.status | titlecase }}
                     </span>
@@ -94,7 +94,7 @@
           @if(isLoading) {
             <app-spinner></app-spinner>
           }
-      
+
           @if(!isLoading){
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
@@ -147,7 +147,7 @@
       @if(isLoading) {
         <app-spinner></app-spinner>
       }
-  
+
       @if(!isLoading){
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">

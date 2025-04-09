@@ -1,0 +1,62 @@
+<div class="chat-container">
+  <!-- Chats List -->
+  <div class="chat-sidebar">
+    <a class="back-button" (click)="goBack()"><i class="fas fa-arrow-left"></i>
+      Back</a>
+
+    <div class="search-container">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search" />
+    </div>
+
+    <h4 class="chat-title">Chats</h4>
+    <div class="chat-list">
+      @for(u of usersWithMessages; track u._id){
+      <div class="chat-item" (click)="selectUser(u)" [class.active]="u._id === selectedUser._id">
+        <img [src]="'http://localhost:3000/img/users/' + (u.image || 'profile-img.png')" [alt]="u.name || 'Avatar'"
+          class="avatar">
+        <div class="chat-info">
+          <div class="chat-name">{{ u.name }}</div>
+          <div class="chat-subtitle">{{ u.title }}</div>
+        </div>
+      </div>
+      } @empty {
+        <div class="text-center my-5 text-muted">
+          No Chats
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Conversation -->
+  <div class="chat-main">
+    <div class="chat-header">
+      <img [src]="'http://localhost:3000/img/users/' + (selectedUser?.image || 'profile-img.png')"
+        [alt]="selectedUser?.name || 'User'" class="avatar">
+      <div class="chat-header-info">
+        <h5>{{ selectedUser?.name }}</h5>
+        <span class="status-indicator online"></span>
+      </div>
+      <div class="chat-tools">
+        <i class="fas fa-phone"></i>
+        <i class="fas fa-video"></i>
+        <i class="fas fa-ellipsis-v"></i>
+      </div>
+    </div>
+
+    <div class="chat-body">
+      @for(msg of filteredMessages; track $index){
+      <div [ngClass]="{ 'message-right': isCurrentUser(msg), 'message-left': !isCurrentUser(msg) }"
+        class="chat-message">
+        <div class="bubble">{{ msg.content }}</div>
+        <!-- <div class="timestamp">{{ msg.sender }} • {{ msg.sender_Role }}</div> -->
+      </div>
+      }
+    </div>
+
+    <div class="chat-input">
+      <input type="text" placeholder="Type something" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>

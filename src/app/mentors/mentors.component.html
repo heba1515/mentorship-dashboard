@@ -5,7 +5,7 @@
 <div class="card rounded">
   <div class="card-body p-0">
     @if(isLoading) {
-      <app-spinner></app-spinner>
+    <app-spinner></app-spinner>
     }
 
     @if(!isLoading){
@@ -18,6 +18,8 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">Status</th>
+            <th scope="col">Activation</th>
+            <th scope="col">Chat</th>
 
           </tr>
         </thead>
@@ -26,7 +28,8 @@
           <tr>
             <td class="ps-4">
               <div class="d-flex align-items-center">
-                <img [src]="'http://localhost:3000/img/users/' + (mentor.image || 'profile-img.png')" [alt]="mentor.name" class="avatar rounded-circle me-3">
+                <img [src]="'http://localhost:3000/img/users/' + (mentor.image || 'profile-img.png')"
+                  [alt]="mentor.name" class="avatar rounded-circle me-3">
                 <div>
                   <div class="fw-semibold">{{ mentor.name }}</div>
                   <small class="text-muted">{{ mentor.title }}</small>
@@ -57,6 +60,31 @@
                   }">
                 {{ mentor.status | titlecase }}
               </span>
+            </td>
+
+            <td>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="activate-{{mentor._id}}"
+                  [checked]="mentor.status === 'active'" (change)="toggleMentorStatus(mentor)">
+                <label class="form-check-label" for="activate-{{mentor._id}}">
+                  {{ mentor.status === 'active' ? 'Active' : 'Inactive' }}
+                </label>
+              </div>
+            </td>
+
+            <!-- Chat Button and Popup -->
+            <td>
+              <button class="btn btn-sm btn-success" (click)="toggleChat(mentor._id)">
+                Send Message
+              </button>
+
+              @if(activeChatMentorId === mentor._id){
+              <div class="chat-popup">
+                <textarea class="form-control mb-2" [(ngModel)]="messageContent" rows="2"
+                  placeholder="Type a message..."></textarea>
+                <button class="btn btn-sm btn-success w-100" (click)="sendMessage(mentor)">Send</button>
+              </div>
+              }
             </td>
           </tr>
           } @empty {
