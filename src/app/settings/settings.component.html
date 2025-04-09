@@ -98,7 +98,7 @@
 </div>
 
 <div class="container my-3">
-<!-- Localization Details -->
+  <!-- Localization Details -->
   <div class="row">
     <div class="col-md-6">
       <div class="card p-4">
@@ -155,13 +155,9 @@
     <div class="col-md-6">
       <div class="card p-4">
         <h4 class="mb-3">Add New Admin</h4>
-
         <form [formGroup]="newAdminForm" (ngSubmit)="addAdmin()">
-          <div class="form-group">
-            <label>Admin Image</label>
-            <input type="file" class="form-control" (change)="onFileChange($event, 'image')" />
-          </div>
 
+          <!-- Existing fields -->
           <div class="form-group mt-3">
             <label>Admin Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" formControlName="name" placeholder="Enter Admin Name" />
@@ -172,14 +168,29 @@
             <input type="email" class="form-control" formControlName="email" placeholder="Enter Admin Email" />
           </div>
 
-          <div class="form-group mt-3">
-            <label>Admin Phone <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" formControlName="phone" placeholder="Enter Admin Phone" />
+          <!-- Password Fields -->
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="password" placeholder="Enter Password" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Confirm Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="confirmedPassword"
+                  placeholder="Confirm Password" />
+                @if(newAdminForm.hasError('passwordMismatch') && newAdminForm.get('confirmedPassword')?.touched) {
+                <small class="text-danger">Passwords do not match</small>
+                }
+              </div>
+            </div>
           </div>
 
           <div class="form-group mt-3">
-            <label>Admin Password <span class="text-danger">*</span></label>
-            <input type="password" class="form-control" formControlName="password" placeholder="Enter Admin Password" />
+            <label>Admin Phone <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" formControlName="phone" placeholder="Enter Admin Phone" />
           </div>
 
           <div class="mt-4">

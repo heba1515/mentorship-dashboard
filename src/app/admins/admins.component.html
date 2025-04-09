@@ -1,1 +1,85 @@
-<p>admins works!</p>
+<!-- Admins Table -->
+<h2>Admins</h2>
+<p>Dashboard / <span class="frist-color">Admins</span></p>
+
+<div class="card rounded">
+  <div class="card-body p-0">
+    @if(isLoading) {
+    <app-spinner></app-spinner>
+    }
+
+    @if(!isLoading){
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col " class="ps-4 second-color">Admin Name</th>
+            <th scope="col">Member Since</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <!-- <th scope="col">Chat</th> -->
+
+          </tr>
+        </thead>
+        <tbody>
+          @for(admin of admins; track admin._id; let i = $index){
+          <tr>
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <img [src]="'http://localhost:3000/img/users/' + (admin.image || 'profile-img.png')"
+                  [alt]="admin.name" class="avatar rounded-circle me-3">
+                <div>
+                  <div class="fw-semibold">
+                    {{ admin.name }}
+                    @if(admin.isSuperAdmin) {
+                      <span class="text-warning" title="Super Admin">★</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span class="badge text-dark fw-bold">{{ admin.updatedAt }}</span>
+            </td>
+
+            <td>
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="fw-semibold">{{ admin.email }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div>{{ admin.phone }}</div>
+            </td>
+
+            <!-- Chat Button and Popup -->
+            <!-- <td>
+              <button class="btn btn-sm btn-success" (click)="toggleChat(admin._id)">
+                Send Message
+              </button>
+
+              @if(activeChatadminId === admin._id){
+              <div class="chat-popup">
+                <textarea class="form-control mb-2" [(ngModel)]="messageContent" rows="2"
+                  placeholder="Type a message..."></textarea>
+                <button class="btn btn-sm btn-success w-100" (click)="sendMessage(admin)">Send</button>
+              </div>
+              }
+            </td> -->
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">
+              No admins found
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+</div>

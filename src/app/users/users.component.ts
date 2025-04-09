@@ -23,10 +23,6 @@ export class UsersComponent {
 
   ngOnInit() {
     this.fetchUsers();
-    this.usersService.getAdmins().subscribe({
-      next: admins => console.log('Admin users:', admins),
-      error: err => console.error('Error:', err)
-    });
   }
 
   fetchUsers() {

@@ -59,7 +59,7 @@
 
             <td>
               <span class="badge" [ngClass]="{
-                    'bgact': session.status === 'active',
+                    'bgact': session.status === 'completed',
                     'bgpend': session.status === 'pending'
                   }">
                 {{ session.status | titlecase }}

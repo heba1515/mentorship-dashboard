@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UsersService } from '../services/users.service';
+import { user } from '../interfaces/user';
+import { admin } from '../interfaces/admin';
 
 @Component({
   selector: 'app-settings',
@@ -45,7 +48,7 @@ export class SettingsComponent {
     { icon: 'fa-linkedin-in', placeholder: 'https://www.linkedin.com' }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private usersService: UsersService) {
     this.websiteForm = this.fb.group({
       websiteName: ['', [Validators.required]],
       logo: [null, [Validators.required]],
@@ -73,12 +76,12 @@ export class SettingsComponent {
     });
 
     this.newAdminForm = this.fb.group({
-      image: [null],
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10,15}$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmedPassword: ['', [Validators.required]]
+    }, { validator: this.passwordMatchValidator });
 
     for (const option of this.iconOptions) {
       this.addLink(option);
@@ -180,28 +183,41 @@ export class SettingsComponent {
     }
   }
 
+  passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+
+    if (password !== confirmPassword) {
+      form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    } else {
+      form.get('confirmPassword')?.setErrors(null);
+    }
+    return null;
+  }
+
   addAdmin() {
     if (this.newAdminForm.valid) {
-      const formData = new FormData();
+      const newAdminData: Partial<admin> = {
+        name: this.newAdminForm.value.name,
+        email: this.newAdminForm.value.email,
+        phone: this.newAdminForm.value.phone,
+        password: this.newAdminForm.value.password,
+        confirmedPassword: this.newAdminForm.value.confirmedPassword,
+      };
 
-      Object.keys(this.newAdminForm.value).forEach((key) => {
-        if (key !== 'image') {
-          formData.append(key, this.newAdminForm.value[key]);
+      this.usersService.addAdmin(newAdminData).subscribe({
+        next: (res) => {
+          console.log('Admin added:', res);
+          this.isAdminAdded = true;
+          this.adminMessage = 'Admin added successfully!';
+          this.newAdminForm.reset();
+        },
+        error: (err) => {
+          console.error('Failed to add admin:', err);
+          this.isAdminAdded = false;
+          this.adminMessage = 'Failed to add admin. Please try again.';
         }
       });
-
-      formData.append('role', 'Admin');
-
-      const imageFile = this.newAdminForm.get('image')?.value;
-      if (imageFile) {
-        formData.append('image', imageFile, imageFile.name);
-      }
-
-      console.log('New Admin Data:', Object.fromEntries(formData))
-
-      this.isAdminAdded = true;
-      this.adminMessage = 'Admin added successfully!';
-      this.newAdminForm.reset();
     } else {
       this.isAdminAdded = false;
       this.adminMessage = 'Please fill in all required fields correctly.';

@@ -23,14 +23,75 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="py-3">
+    <!-- Admin List -->
+    <div class="card shadow-sm rounded-3">
+      <h5 class="card-header bg-white">Admin List</h5>
+      <div class="card-body p-0">
+        @if(isLoading) {
+        <app-spinner></app-spinner>
+        }
+
+        @if(!isLoading){
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col " class="ps-4 second-color">Admin Name</th>
+                <th scope="col">Admin Since</th>
+                <th scope="col">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(admin of admins | slice:0:5; track admin._id; let i = $index){
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <img [src]="'http://localhost:3000/img/users/' + (admin?.image || 'profile-img.png')"
+                      [alt]="admin.name" class="avatar rounded-circle me-3">
+                    <div>
+                      <div class="fw-semibold">
+                        {{ admin.name }}
+                        @if(admin.isSuperAdmin) {
+                          <span class="text-warning" title="Super Admin">★</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <span class="badge text-dark fw-bold">{{ admin.updatedAt }}</span>
+                </td>
+
+                <td>
+                  <span class="badge text-dark fw-bold">{{ admin.email }}</span>
+                </td>
+
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No Admins found
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="row gap-3 gap-md-0">
     <!-- Mentor List -->
     <div class="col-md-6">
       <div class="card shadow-sm rounded-3">
         <h5 class="card-header bg-white">Mentor List</h5>
         <div class="card-body p-0">
           @if(isLoading) {
-            <app-spinner></app-spinner>
+          <app-spinner></app-spinner>
           }
 
           @if(!isLoading){
@@ -92,7 +153,7 @@
         <h5 class="card-header bg-white">Learner List</h5>
         <div class="card-body p-0">
           @if(isLoading) {
-            <app-spinner></app-spinner>
+          <app-spinner></app-spinner>
           }
 
           @if(!isLoading){
@@ -109,7 +170,8 @@
                 <tr>
                   <td class="ps-4">
                     <div class="d-flex align-items-center">
-                      <img [src]="'http://localhost:3000/img/users/' + (user?.image || 'profile-img.png')" [alt]="user.name" class="avatar rounded-circle me-3">
+                      <img [src]="'http://localhost:3000/img/users/' + (user?.image || 'profile-img.png')"
+                        [alt]="user.name" class="avatar rounded-circle me-3">
                       <div>
                         <div class="fw-semibold">{{ user.name }}</div>
                         <small class="text-muted">{{ user.title }}</small>
@@ -136,16 +198,16 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="container py-3">
+
+<div class="py-3">
   <div class="card shadow-sm rounded-3">
     <h5 class="card-header bg-white">Booking List</h5>
 
     <!-- Booking Table -->
     <div class="card-body p-0">
       @if(isLoading) {
-        <app-spinner></app-spinner>
+      <app-spinner></app-spinner>
       }
 
       @if(!isLoading){
@@ -189,7 +251,7 @@
 
               <td>
                 <span class="badge" [ngClass]="{
-                      'bgact': session.status === 'active',
+                      'bgact': session.status === 'completed',
                       'bgpend': session.status === 'pending'
                     }">
                   {{ session.status | titlecase }}
@@ -213,4 +275,5 @@
       }
     </div>
   </div>
+</div>
 </div>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { user } from '../interfaces/user';
+import { admin } from '../interfaces/admin';
 
 @Injectable({
   providedIn: 'root'
@@ -23,38 +24,30 @@ export class UsersService {
   }
 
   getUsers(): Observable<user[]> {
-    return this.http.get<{ success: boolean; users: user[] }>(
+    return this.http.get<{ success: string; users: user[] }>(
       this.apiUrl,
       { headers: this.getAuthHeaders() }
     ).pipe(
-      map(response => {
-        if (!response.success) {
-          throw new Error('Failed to fetch users');
-        }
-        return response.users;
-      }),
-      catchError(error => {
-        console.error('Error fetching users:', error);
-        return throwError(() => new Error('Failed to load users. Please try again.'));
-      })
+      map((response) => response.users)
     );
   }
 
-  getAdmins(): Observable<user[]> {
-    return this.http.get<{ success: boolean; admins: user[] }>(
+  getAdmins(): Observable<admin[]> {
+    return this.http.get<{ success: string; message: string; data: admin[] }>(
       `${this.apiUrl}/admins`,
       { headers: this.getAuthHeaders() }
     ).pipe(
-      map(response => {
-        if (!response.success) {
-          throw new Error('Failed to fetch admin users');
-        }
-        return response.admins;
-      }),
-      catchError(error => {
-        console.error('Error fetching admin users:', error);
-        return throwError(() => new Error('Failed to load admin users. Please try again.'));
-      })
+      map((response) => response.data)
+    );
+  }
+
+  addAdmin(newAdmin: Partial<admin>): Observable<admin> {
+    return this.http.post<{ status: string; message: string; data: admin }>(
+      `${this.apiUrl}/admins`,
+      newAdmin,
+      { headers: this.getAuthHeaders() }
+    ).pipe(
+      map((response) => response.data)
     );
   }
 }
