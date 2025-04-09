@@ -77,7 +77,7 @@ export class SettingsComponent {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10,15}$/)]],
-      // password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
     for (const option of this.iconOptions) {
@@ -183,11 +183,21 @@ export class SettingsComponent {
   addAdmin() {
     if (this.newAdminForm.valid) {
       const formData = new FormData();
+
       Object.keys(this.newAdminForm.value).forEach((key) => {
-        formData.append(key, this.newAdminForm.value[key]);
+        if (key !== 'image') {
+          formData.append(key, this.newAdminForm.value[key]);
+        }
       });
 
-      console.log('New Admin Data:', this.newAdminForm.value);
+      formData.append('role', 'Admin');
+
+      const imageFile = this.newAdminForm.get('image')?.value;
+      if (imageFile) {
+        formData.append('image', imageFile, imageFile.name);
+      }
+
+      console.log('New Admin Data:', Object.fromEntries(formData))
 
       this.isAdminAdded = true;
       this.adminMessage = 'Admin added successfully!';
