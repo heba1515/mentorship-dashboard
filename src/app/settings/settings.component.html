@@ -1,7 +1,9 @@
-<h2>Settings</h2>
-<p>Dashboard / <span class="frist-color">Settings</span></p>
+<div class="container mt-3">
+  <div class="py-3">
+    <h2>Settings</h2>
+    <p>Dashboard / <span class="frist-color">Settings</span></p>
 
-<!-- <div class="container">
+    <!-- <div class="container">
   <h4 class="py-3">General Setting</h4>
   <div class="row">
     <div class="col-md-6">
@@ -47,64 +49,67 @@
   </div>
 </div> -->
 
-@if(isSuperAdmin) {
-<div class="container my-3">
-  <h4 class="py-3">New Admin</h4>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card p-4">
-        <h4 class="mb-3">Add New Admin</h4>
-        <form [formGroup]="newAdminForm" (ngSubmit)="addAdmin()">
+    @if(isSuperAdmin) {
+    <div class="container my-3">
+      <h4 class="py-3">New Admin</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card p-4">
+            <h4 class="mb-3">Add New Admin</h4>
+            <form [formGroup]="newAdminForm" (ngSubmit)="addAdmin()">
 
-          <!-- Existing fields -->
-          <div class="form-group mt-3">
-            <label>Admin Name <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" formControlName="name" placeholder="Enter Admin Name" />
-          </div>
-
-          <div class="form-group mt-3">
-            <label>Admin Email <span class="text-danger">*</span></label>
-            <input type="email" class="form-control" formControlName="email" placeholder="Enter Admin Email" />
-          </div>
-
-          <!-- Password Fields -->
-          <div class="row mt-3">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Password <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" formControlName="password" placeholder="Enter Password" />
+              <!-- Existing fields -->
+              <div class="form-group mt-3">
+                <label>Admin Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Enter Admin Name" />
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Confirm Password <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" formControlName="confirmedPassword"
-                  placeholder="Confirm Password" />
-                @if(newAdminForm.hasError('passwordMismatch') && newAdminForm.get('confirmedPassword')?.touched) {
-                <small class="text-danger">Passwords do not match</small>
+
+              <div class="form-group mt-3">
+                <label>Admin Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" formControlName="email" placeholder="Enter Admin Email" />
+              </div>
+
+              <!-- Password Fields -->
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Password <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" formControlName="password"
+                      placeholder="Enter Password" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Confirm Password <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" formControlName="confirmedPassword"
+                      placeholder="Confirm Password" />
+                    @if(newAdminForm.hasError('passwordMismatch') && newAdminForm.get('confirmedPassword')?.touched) {
+                    <small class="text-danger">Passwords do not match</small>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group mt-3">
+                <label>Admin Phone <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="phone" placeholder="Enter Admin Phone" />
+              </div>
+
+              <div class="mt-4">
+                <button type="submit" class="btn btn-success me-3" [disabled]="newAdminForm.invalid">Add Admin</button>
+                <button type="button" class="btn btn-outline-secondary me-3" (click)="cancelNewAdmin()">Cancel</button>
+
+                @if(adminMessage) {
+                <small [ngClass]="{ 'frist-color': isAdminAdded, 'text-danger': !isAdminAdded }">
+                  {{ adminMessage }}
+                </small>
                 }
               </div>
-            </div>
+            </form>
           </div>
-
-          <div class="form-group mt-3">
-            <label>Admin Phone <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" formControlName="phone" placeholder="Enter Admin Phone" />
-          </div>
-
-          <div class="mt-4">
-            <button type="submit" class="btn btn-success me-3" [disabled]="newAdminForm.invalid">Add Admin</button>
-            <button type="button" class="btn btn-outline-secondary me-3" (click)="cancelNewAdmin()">Cancel</button>
-
-            @if(adminMessage) {
-            <small [ngClass]="{ 'frist-color': isAdminAdded, 'text-danger': !isAdminAdded }">
-              {{ adminMessage }}
-            </small>
-            }
-          </div>
-        </form>
+        </div>
       </div>
     </div>
+    }
   </div>
 </div>
-}

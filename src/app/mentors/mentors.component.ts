@@ -89,11 +89,7 @@ export class MentorsComponent {
 
     mentor.status = newStatus;
 
-    const update$ = newStatus === 'active'
-      ? this.mentorsService.activateMentor(mentor._id)
-      : this.mentorsService.deactivateMentor(mentor._id);
-
-    update$.subscribe({
+    this.mentorsService.activateMentor(mentor._id).subscribe({
       error: (err) => {
         console.error('Error updating mentor status:', err);
         mentor.status = originalStatus;

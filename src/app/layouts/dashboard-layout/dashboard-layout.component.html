@@ -3,11 +3,22 @@
     <app-header></app-header>
   </header>
 
-  <aside class="sidebar">
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
     <app-sidebar></app-sidebar>
   </aside>
 
-  <main class="content">
+  <button class="sidebar-toggle" (click)="toggleSidebar()"
+          [style.left]="isSidebarCollapsed ? '0px' : '250px'">
+    <i class="fa-solid angle-icon"
+       [class.fa-angles-right]="isSidebarCollapsed"
+       [class.fa-angles-left]="!isSidebarCollapsed"></i>
+  </button>
+
+  <div class="sidebar-overlay"
+       [class.active]="!isSidebarCollapsed && isMobileView"
+       (click)="toggleSidebar()"></div>
+
+  <main class="content" [class.collapsed]="isSidebarCollapsed">
     <router-outlet></router-outlet>
   </main>
 </div>

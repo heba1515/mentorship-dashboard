@@ -31,16 +31,6 @@ export class MentorsService {
   activateMentor(mentorId: string): Observable<mentor> {
     return this.http.post<{ status: string; message: string; data: mentor }>(
       `${this.apiUrl}/${mentorId}/activate`,
-      {}, 
-      { headers: this.getAuthHeaders() }
-    ).pipe(
-      map((response) => response.data)
-    );
-  }
-
-  deactivateMentor(mentorId: string): Observable<mentor> {
-    return this.http.post<{ status: string; message: string; data: mentor }>(
-      `${this.apiUrl}/${mentorId}/deactivate`,
       {},
       { headers: this.getAuthHeaders() }
     ).pipe(

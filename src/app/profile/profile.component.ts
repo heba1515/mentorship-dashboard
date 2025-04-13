@@ -24,10 +24,8 @@ export class ProfileComponent implements OnInit {
 
     this.editForm = this.fb.group({
       name: ['', [Validators.required]],
-      dob: ['', [Validators.required]],
       contactEmail: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      address: ['', [Validators.required]]
     });
   }
 
@@ -37,10 +35,8 @@ export class ProfileComponent implements OnInit {
     if (this.adminDetails) {
       this.editForm.patchValue({
         name: this.adminDetails.name,
-        dob: this.adminDetails.dob || '',
         contactEmail: this.adminDetails.email,
         phone: this.adminDetails.phone,
-        address: this.adminDetails.address || ''
       });
     }
   }
@@ -81,10 +77,8 @@ export class ProfileComponent implements OnInit {
     if (!this.isEditing && this.adminDetails) {
       this.editForm.reset({
         name: this.adminDetails.name,
-        dob: this.adminDetails.dob || '',
         contactEmail: this.adminDetails.email,
         phone: this.adminDetails.phone,
-        address: this.adminDetails.address || ''
       });
     }
   }

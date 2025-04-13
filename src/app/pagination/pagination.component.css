@@ -1,3 +1,7 @@
+.showing-entries{
+  font-size: 0.85rem;
+}
+
 .pagination-container {
   background-color: #f8f9fa;
   border-top: 1px solid #dee2e6;
@@ -6,6 +10,8 @@
 .pagination-controls {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 0px 20px;
 }
 
 .page-size-selector {
@@ -15,4 +21,8 @@
 .btn-success {
   background-color: #118577;
   border: none;
+}
+
+.btn-outline-secondary:hover{
+  background-color: #172E59;
 }

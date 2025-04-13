@@ -1,5 +1,5 @@
 <div class="pagination-container d-flex justify-content-between align-items-center p-3">
-  <div class="showing-entries">
+  <div class="showing-entries text-muted">
     Showing {{ startItem }} to {{ endItem }} of {{ totalItems }} entries
   </div>
 
@@ -10,12 +10,38 @@
       Previous
     </button>
 
-    @for(page of getPageNumbers(); track page) {
+    <button class="btn btn-sm mx-1"
+            [class.btn-success]="1 === currentPage"
+            [class.btn-outline-secondary]="1 !== currentPage"
+            (click)="goToPage(1)">
+      1
+    </button>
+
+    @if(currentPage > 3) {
+      <span class="mx-1 align-self-end">...</span>
+    }
+
+    @for(page of getVisiblePages(); track page) {
+      @if(page !== 1 && page !== totalPages) {
+        <button class="btn btn-sm mx-1"
+                [class.btn-success]="page === currentPage"
+                [class.btn-outline-secondary]="page !== currentPage"
+                (click)="goToPage(page)">
+          {{ page }}
+        </button>
+      }
+    }
+
+    @if(currentPage < totalPages - 2) {
+      <span class="mx-1 align-self-end">...</span>
+    }
+
+    @if(totalPages > 1) {
       <button class="btn btn-sm mx-1"
-              [class.btn-success]="page === currentPage"
-              [class.btn-outline-secondary]="page !== currentPage"
-              (click)="goToPage(page)">
-        {{ page }}
+              [class.btn-success]="totalPages === currentPage"
+              [class.btn-outline-secondary]="totalPages !== currentPage"
+              (click)="goToPage(totalPages)">
+        {{ totalPages }}
       </button>
     }
 

@@ -1,37 +1,48 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg bg-white">
   <div class="container mt-2 border-bottom border-light-subtle">
     <div class="navbar-brand fs-4 bold mb-2">
       <span class="fw-bold frist-color">Mentor</span>
       <span class="second-color fw-bold">Ship</span>
     </div>
 
-    <div class="search-box">
-      <input type="text" class="form-control" placeholder="Search here">
-    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <div class="nav-icons d-flex align-items-center">
-      <div class="notification position-relative me-3">
-        <i class="fa-regular fa-bell"></i>
-        <span class="badge position-absolute top-0 start-100 translate-middle">3</span>
-      </div>
-      <div class="dropdown" [class.show]="isOpen">
-        <button class="btn p-0 border-0 bg-transparent d-flex align-items-center" (click)="toggleDropdown()">
-          <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')" class="rounded-circle" width="36" height="36"
-            alt="Profile" />
-          <i class="fas fa-chevron-down ms-2"></i>
-        </button>
+    <div class="collapse navbar-collapse py-3" id="navbarSupportedContent">
+      <form class="d-flex mb-2 mb-lg-0 mx-auto" role="search">
+        <div class="search-box">
+          <input type="text" class="form-control w-100 border border-light-subtle" placeholder="Search"
+          aria-label="Search">
+        <i class="fas fa-search"></i>
+        </div>
+      </form>
 
-        <div class="dropdown-menu dropdown-menu-end mt-2 shadow" [class.show]="isOpen">
-          <div class="d-flex align-items-center p-3 border-bottom">
-            <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')" class="rounded-circle me-2" width="40" height="40"
-              alt="Admin" />
-            <div>
-              <div class="fw-semibold">{{ adminDetails?.name }}</div>
-              <small class="text-muted">Administrator</small>
+      <div class="nav-icons d-flex align-items-center">
+        <div class="notification position-relative me-3">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge position-absolute top-0 start-100 translate-middle">3</span>
+        </div>
+        <div class="dropdown" [class.show]="isOpen">
+          <button class="btn p-0 border-0 bg-transparent d-flex align-items-center" (click)="toggleDropdown()">
+            <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')"
+              class="rounded-circle" width="36" height="36" alt="Profile" />
+            <i class="fas fa-chevron-down ms-2"></i>
+          </button>
+
+          <div class="dropdown-menu dropdown-menu-end mt-2 shadow" [class.show]="isOpen">
+            <div class="d-flex align-items-center p-3 border-bottom">
+              <img [src]="'http://localhost:3000/img/users/' + (adminDetails?.image || 'profile-img.png')"
+                class="rounded-circle me-2" width="40" height="40" alt="Admin" />
+              <div>
+                <div class="fw-semibold">{{ adminDetails?.name }}</div>
+                <small class="text-muted">Administrator</small>
+              </div>
             </div>
+            <a class="dropdown-item" routerLink="/dashboard/profile" routerLinkActive="active_link">My Profile</a>
+            <button class="dropdown-item text-danger" routerLink="/login" (click)="logout()">Logout</button>
           </div>
-          <a class="dropdown-item" routerLink="/dashboard/profile" routerLinkActive="active_link">My Profile</a>
-          <button class="dropdown-item text-danger" routerLink="/login" (click)="logout()">Logout</button>
         </div>
       </div>
     </div>

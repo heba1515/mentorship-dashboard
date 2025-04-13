@@ -1,10 +1,19 @@
 .search-box {
-  width: 40%;
+  width: 350px;
+  position: relative;
+}
+
+.search-box i{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #cbcbcb;
 }
 
 .form-control {
   border-radius: 20px;
-  padding: 8px 15px;
+  padding: 8px 40px;
 }
 
 .nav-icons {

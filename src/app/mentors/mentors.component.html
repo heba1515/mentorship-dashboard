@@ -1,125 +1,123 @@
 <!-- Mentors Table -->
-<h2>Mentors</h2>
-<p>Dashboard / <span class="frist-color">Mentors</span></p>
+<div class="container mt-3">
+  <div class="py-3">
+    <h2>Mentors</h2>
+    <p>Dashboard / <span class="frist-color">Mentors</span></p>
 
-<!-- Filter Controls -->
-<div class="p-3 border-bottom">
-  <div class="row">
-    <div class="col-md-3">
-      <app-status-filter
-        [statusOptions]="availableStatuses"
-        [selectedStatus]="statusFilter"
-        (statusChange)="onFilterChange($event)">
-      </app-status-filter>
+    <!-- Filter Controls -->
+    <div class="p-3 border-bottom">
+      <div class="row">
+        <div class="col-md-3">
+          <app-status-filter [statusOptions]="availableStatuses" [selectedStatus]="statusFilter"
+            (statusChange)="onFilterChange($event)">
+          </app-status-filter>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="card rounded">
-  <div class="card-body p-0">
-    @if(isLoading) {
-    <app-spinner></app-spinner>
-    }
+    <div class="card rounded">
+      <div class="card-body p-0">
+        @if(isLoading) {
+        <app-spinner></app-spinner>
+        }
 
-    @if(!isLoading){
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th scope="col " class="ps-4 second-color">Mentor Name</th>
-            <th scope="col">Member Since</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Status</th>
-            <th scope="col">Activation</th>
-            <th scope="col">Chat</th>
+        @if(!isLoading){
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col " class="ps-4 second-color">Mentor Name</th>
+                <th scope="col">Member Since</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Status</th>
+                <th scope="col">Activation</th>
+                <th scope="col">Chat</th>
 
-          </tr>
-        </thead>
-        <tbody>
-          @for(mentor of paginatedMentors; track mentor._id; let i = $index){
-          <tr>
-            <td class="ps-4">
-              <div class="d-flex align-items-center">
-                <img [src]="'http://localhost:3000/img/users/' + (mentor.image || 'profile-img.png')"
-                  [alt]="mentor.name" class="avatar rounded-circle me-3">
-                <div>
-                  <div class="fw-semibold">{{ mentor.name }}</div>
-                  <small class="text-muted">{{ mentor.title }}</small>
-                </div>
-              </div>
-            </td>
+              </tr>
+            </thead>
+            <tbody>
+              @for(mentor of paginatedMentors; track mentor._id; let i = $index){
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <img [src]="'http://localhost:3000/img/users/' + (mentor.image || 'profile-img.png')"
+                      [alt]="mentor.name" class="avatar rounded-circle me-3">
+                    <div>
+                      <div class="fw-semibold">{{ mentor.name }}</div>
+                      <small class="text-muted">{{ mentor.title }}</small>
+                    </div>
+                  </div>
+                </td>
 
-            <td>
-              <span class="badge text-dark fw-bold">{{ mentor.updatedAt }}</span>
-            </td>
+                <td>
+                  <span class="badge text-dark fw-bold">{{ mentor.updatedAt }}</span>
+                </td>
 
-            <td>
-              <div class="d-flex align-items-center">
-                <div>
-                  <div class="fw-semibold">{{ mentor.email }}</div>
-                </div>
-              </div>
-            </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <div class="fw-semibold">{{ mentor.email }}</div>
+                    </div>
+                  </div>
+                </td>
 
-            <td>
-              <div>{{ mentor.phone }}</div>
-            </td>
+                <td>
+                  <div>{{ mentor.phone }}</div>
+                </td>
 
-            <td>
-              <span class="badge" [ngClass]="{
+                <td>
+                  <span class="badge" [ngClass]="{
                     'bgact': mentor.status === 'active',
                     'bgpend': mentor.status === 'inactive'
                   }">
-                {{ mentor.status | titlecase }}
-              </span>
-            </td>
+                    {{ mentor.status | titlecase }}
+                  </span>
+                </td>
 
-            <td>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="activate-{{mentor._id}}"
-                  [checked]="mentor.status === 'active'" (change)="toggleMentorStatus(mentor)">
-                <label class="form-check-label" for="activate-{{mentor._id}}">
-                  {{ mentor.status === 'active' ? 'Active' : 'Inactive' }}
-                </label>
-              </div>
-            </td>
+                <td>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="activate-{{mentor._id}}"
+                      [checked]="mentor.status === 'active'" (change)="toggleMentorStatus(mentor)">
+                    <label class="form-check-label" for="activate-{{mentor._id}}">
+                      {{ mentor.status === 'active' ? 'Active' : 'Inactive' }}
+                    </label>
+                  </div>
+                </td>
 
-            <!-- Chat Button and Popup -->
-            <td>
-              <button class="btn btn-sm btn-success" (click)="toggleChat(mentor._id)">
-                Send Message
-              </button>
+                <!-- Chat Button and Popup -->
+                <td>
+                  <button class="btn btn-sm btn-success" (click)="toggleChat(mentor._id)">
+                    Send Message
+                  </button>
 
-              @if(activeChatMentorId === mentor._id){
-              <div class="chat-popup">
-                <textarea class="form-control mb-2" [(ngModel)]="messageContent" rows="2"
-                  placeholder="Type a message..."></textarea>
-                <button class="btn btn-sm btn-success w-100" (click)="sendMessage(mentor)">Send</button>
-              </div>
+                  @if(activeChatMentorId === mentor._id){
+                  <div class="chat-popup">
+                    <textarea class="form-control mb-2" [(ngModel)]="messageContent" rows="2"
+                      placeholder="Type a message..."></textarea>
+                    <button class="btn btn-sm btn-success w-100" (click)="sendMessage(mentor)">Send</button>
+                  </div>
+                  }
+                </td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No mentors found
+                </td>
+              </tr>
               }
-            </td>
-          </tr>
-          } @empty {
-          <tr>
-            <td colspan="6" class="text-center py-4 text-muted">
-              No mentors found
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
 
-      @if(filteredMentors.length > 0) {
-        <app-pagination
-          [currentPage]="currentPage"
-          [itemsPerPage]="itemsPerPage"
-          [totalItems]="filteredMentors.length"
-          (pageChange)="onPageChange($event)"
-          (pageSizeChange)="onPageSizeChange($event)">
+        @if(filteredMentors.length > 0) {
+        <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="filteredMentors.length"
+          (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
         </app-pagination>
-      }
+        }
+        }
+      </div>
     </div>
-    }
   </div>
 </div>

@@ -1,84 +1,86 @@
 <!-- users Table -->
-<h2>Users</h2>
-<p>Dashboard / <span class="frist-color">Users</span></p>
+<div class="container mt-3">
+  <div class="py-3">
+    <h2>Users</h2>
+    <p>Dashboard / <span class="frist-color">Users</span></p>
 
-<div class="card rounded">
-  <div class="card-body p-0">
-    @if(isLoading) {
-      <app-spinner></app-spinner>
-    }
+    <div class="card rounded">
+      <div class="card-body p-0">
+        @if(isLoading) {
+        <app-spinner></app-spinner>
+        }
 
-    @if(!isLoading){
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th scope="col" class="ps-4 second-color">User Name</th>
-            <th scope="col">Member Since</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Chat</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for(user of paginatedUsers; track user._id; let i = $index){
-          <tr>
-            <td class="ps-4">
-              <div class="d-flex align-items-center">
-                <img [src]="'http://localhost:3000/img/users/' + (user.image || 'profile-img.png')" [alt]="user.name" class="avatar rounded-circle me-3">
-                <div>
-                  <div class="fw-semibold">{{ user.name }}</div>
-                  <small class="text-muted">{{ user.title }}</small>
-                </div>
-              </div>
-            </td>
+        @if(!isLoading){
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col" class="ps-4 second-color">User Name</th>
+                <th scope="col">Member Since</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Chat</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(user of paginatedUsers; track user._id; let i = $index){
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <img [src]="'http://localhost:3000/img/users/' + (user.image || 'profile-img.png')"
+                      [alt]="user.name" class="avatar rounded-circle me-3">
+                    <div>
+                      <div class="fw-semibold">{{ user.name }}</div>
+                      <small class="text-muted">{{ user.title }}</small>
+                    </div>
+                  </div>
+                </td>
 
-            <td>
-              <span class="badge text-dark fw-bold">{{ user.updatedAt }}</span>
-            </td>
+                <td>
+                  <span class="badge text-dark fw-bold">{{ user.updatedAt }}</span>
+                </td>
 
-            <td>
-              <div class="fw-semibold">{{ user.email }}</div>
-            </td>
+                <td>
+                  <div class="fw-semibold">{{ user.email }}</div>
+                </td>
 
-            <td>
-              {{ user.phone }}
-            </td>
+                <td>
+                  {{ user.phone }}
+                </td>
 
-            <!-- Chat Button and Popup -->
-            <td>
-              <button class="btn btn-sm btn-success" (click)="toggleChat(user._id)">
-                Send Message
-              </button>
+                <!-- Chat Button and Popup -->
+                <td>
+                  <button class="btn btn-sm btn-success" (click)="toggleChat(user._id)">
+                    Send Message
+                  </button>
 
-              @if(activeChatUserId === user._id){
-              <div class="chat-popup">
-                <textarea class="form-control mb-2" [(ngModel)]="messageContent" rows="2" placeholder="Type a message..."></textarea>
-                <button class="btn btn-sm btn-success w-100" (click)="sendMessage(user)">Send</button>
-              </div>
-            }
-            </td>
-          </tr>
-          } @empty {
-          <tr>
-            <td colspan="6" class="text-center py-4 text-muted">
-              No users found
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+                  @if(activeChatUserId === user._id){
+                  <div class="chat-popup">
+                    <textarea class="form-control mb-2" [(ngModel)]="messageContent" rows="2"
+                      placeholder="Type a message..."></textarea>
+                    <button class="btn btn-sm btn-success w-100" (click)="sendMessage(user)">Send</button>
+                  </div>
+                  }
+                </td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No users found
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
 
-      @if(users.length > 0) {
-      <app-pagination
-        [currentPage]="currentPage"
-        [itemsPerPage]="itemsPerPage"
-        [totalItems]="users.length"
-        (pageChange)="onPageChange($event)"
-        (pageSizeChange)="onPageSizeChange($event)">
-      </app-pagination>
-      }
+        @if(users.length > 0) {
+        <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="users.length"
+          (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+        </app-pagination>
+        }
+        }
+      </div>
     </div>
-    }
   </div>
 </div>

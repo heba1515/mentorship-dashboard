@@ -1,106 +1,103 @@
 <!-- Transactions Table -->
-<h2>Transactions</h2>
-<p>Dashboard / <span class="frist-color">Transactions</span></p>
+<div class="container mt-3">
+  <div class="py-3">
+    <h2>Transactions</h2>
+    <p>Dashboard / <span class="frist-color">Transactions</span></p>
 
-<!-- Filter Controls -->
-<div class="p-3 border-bottom">
-  <div class="row">
-    <div class="col-md-3">
-      <app-status-filter
-        label="Filter by Payment Status"
-        [statusOptions]="availableStatuses"
-        [selectedStatus]="paymentStatusFilter"
-        (statusChange)="onFilterChange($event)">
-      </app-status-filter>
+    <!-- Filter Controls -->
+    <div class="p-3 border-bottom">
+      <div class="row">
+        <div class="col-md-3">
+          <app-status-filter label="Filter by Payment Status" [statusOptions]="availableStatuses"
+            [selectedStatus]="paymentStatusFilter" (statusChange)="onFilterChange($event)">
+          </app-status-filter>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="card rounded">
-  <div class="card-body p-0">
-    @if(isLoading) {
-      <app-spinner></app-spinner>
-    }
+    <div class="card rounded">
+      <div class="card-body p-0">
+        @if(isLoading) {
+        <app-spinner></app-spinner>
+        }
 
-    @if(!isLoading){
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th scope="col " class="ps-4 second-color">ID</th>
-            <th scope="col">Date</th>
-            <th scope="col">Mentor Name</th>
-            <th scope="col">User Name</th>
-            <th scope="col">Total Amount</th>
-            <th scope="col">Payment Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for(transaction of paginatedTransactions; track transaction._id; let i = $index){
-          <tr>
-            <td class="ps-4">
-              <div class="d-flex align-items-center">
-                <div>
-                  <div class="frist-color">{{ transaction._id }}</div>
-                </div>
-              </div>
-            </td>
+        @if(!isLoading){
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col " class="ps-4 second-color">ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Mentor Name</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Total Amount</th>
+                <th scope="col">Payment Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(transaction of paginatedTransactions; track transaction._id; let i = $index){
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <div class="frist-color">{{ transaction._id }}</div>
+                    </div>
+                  </div>
+                </td>
 
-            <td class="ps-4">
-              <div class="d-flex align-items-center">
-                <div>
-                  <div>{{ transaction.createdAt }}</div>
-                </div>
-              </div>
-            </td>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <div>{{ transaction.createdAt }}</div>
+                    </div>
+                  </div>
+                </td>
 
-            <td class="ps-4">
-              <div class="fw-semibold">{{ getMentorName(transaction.session?.mentor ?? 'Unknown Mentor') }}</div>
-            </td>
+                <td class="ps-4">
+                  <div class="fw-semibold">{{ getMentorName(transaction.session?.mentor ?? 'Unknown Mentor') }}</div>
+                </td>
 
-            <td class="ps-4">
-              <div class="fw-semibold">{{ transaction.user.name }}</div>
-            </td>
+                <td class="ps-4">
+                  <div class="fw-semibold">{{ transaction.user.name }}</div>
+                </td>
 
-            <td>
-              <div>
-                @if(transaction.session?.price) {
-                  ${{ transaction.session?.price | number:'1.2-2' }}
-                } @else {
-                  No Price
-                }
-              </div>
-            </td>
+                <td>
+                  <div>
+                    @if(transaction.session?.price) {
+                    ${{ transaction.session?.price | number:'1.2-2' }}
+                    } @else {
+                    No Price
+                    }
+                  </div>
+                </td>
 
-            <td>
-              <span class="badge" [ngClass]="{
+                <td>
+                  <span class="badge" [ngClass]="{
                     'bgact': transaction.paymentStatus === 'paid',
                     'bgpend': transaction.paymentStatus === 'unpaid'
                   }">
-                {{ transaction.paymentStatus | titlecase }}
-              </span>
-            </td>
-          </tr>
-          } @empty {
-          <tr>
-            <td colspan="6" class="text-center py-4 text-muted">
-              No transactions found
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+                    {{ transaction.paymentStatus | titlecase }}
+                  </span>
+                </td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No transactions found
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
 
-      @if(transactions.length > 0) {
-        <app-pagination
-          [currentPage]="currentPage"
-          [itemsPerPage]="itemsPerPage"
-          [totalItems]="transactions.length"
-          (pageChange)="onPageChange($event)"
-          (pageSizeChange)="onPageSizeChange($event)">
+        @if(transactions.length > 0) {
+        <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="transactions.length"
+          (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
         </app-pagination>
-      }
+        }
+        }
+      </div>
     </div>
-    }
   </div>
 </div>

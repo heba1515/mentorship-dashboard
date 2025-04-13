@@ -1,62 +1,64 @@
 <!-- Admins Table -->
-<h2>Admins</h2>
-<p>Dashboard / <span class="frist-color">Admins</span></p>
+<div class="container mt-3">
+  <div class="py-3">
+    <h2>Admins</h2>
+    <p>Dashboard / <span class="frist-color">Admins</span></p>
 
-<div class="card rounded">
-  <div class="card-body p-0">
-    @if(isLoading) {
-    <app-spinner></app-spinner>
-    }
+    <div class="card rounded">
+      <div class="card-body p-0">
+        @if(isLoading) {
+        <app-spinner></app-spinner>
+        }
 
-    @if(!isLoading){
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th scope="col " class="ps-4 second-color">Admin Name</th>
-            <th scope="col">Member Since</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <!-- <th scope="col">Chat</th> -->
+        @if(!isLoading){
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col " class="ps-4 second-color">Admin Name</th>
+                <th scope="col">Member Since</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <!-- <th scope="col">Chat</th> -->
 
-          </tr>
-        </thead>
-        <tbody>
-          @for(admin of paginatedAdmins; track admin._id; let i = $index){
-          <tr>
-            <td class="ps-4">
-              <div class="d-flex align-items-center">
-                <img [src]="'http://localhost:3000/img/users/' + (admin.image || 'profile-img.png')"
-                  [alt]="admin.name" class="avatar rounded-circle me-3">
-                <div>
-                  <div class="fw-semibold">
-                    {{ admin.name }}
-                    @if(admin.isSuperAdmin) {
-                      <span class="text-warning" title="Super Admin">★</span>
-                    }
+              </tr>
+            </thead>
+            <tbody>
+              @for(admin of paginatedAdmins; track admin._id; let i = $index){
+              <tr>
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <img [src]="'http://localhost:3000/img/users/' + (admin.image || 'profile-img.png')"
+                      [alt]="admin.name" class="avatar rounded-circle me-3">
+                    <div>
+                      <div class="fw-semibold">
+                        {{ admin.name }}
+                        @if(admin.isSuperAdmin) {
+                        <span class="text-warning" title="Super Admin">★</span>
+                        }
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </td>
+                </td>
 
-            <td>
-              <span class="badge text-dark fw-bold">{{ admin.updatedAt }}</span>
-            </td>
+                <td>
+                  <span class="badge text-dark fw-bold">{{ admin.updatedAt }}</span>
+                </td>
 
-            <td>
-              <div class="d-flex align-items-center">
-                <div>
-                  <div class="fw-semibold">{{ admin.email }}</div>
-                </div>
-              </div>
-            </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <div class="fw-semibold">{{ admin.email }}</div>
+                    </div>
+                  </div>
+                </td>
 
-            <td>
-              <div>{{ admin.phone }}</div>
-            </td>
+                <td>
+                  <div>{{ admin.phone }}</div>
+                </td>
 
-            <!-- Chat Button and Popup -->
-            <!-- <td>
+                <!-- Chat Button and Popup -->
+                <!-- <td>
               <button class="btn btn-sm btn-success" (click)="toggleChat(admin._id)">
                 Send Message
               </button>
@@ -69,27 +71,25 @@
               </div>
               }
             </td> -->
-          </tr>
-          } @empty {
-          <tr>
-            <td colspan="6" class="text-center py-4 text-muted">
-              No admins found
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No admins found
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
 
-      @if(admins.length > 0) {
-        <app-pagination
-          [currentPage]="currentPage"
-          [itemsPerPage]="itemsPerPage"
-          [totalItems]="admins.length"
-          (pageChange)="onPageChange($event)"
-          (pageSizeChange)="onPageSizeChange($event)">
+        @if(admins.length > 0) {
+        <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="admins.length"
+          (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
         </app-pagination>
-      }
+        }
+        }
+      </div>
     </div>
-    }
   </div>
 </div>
