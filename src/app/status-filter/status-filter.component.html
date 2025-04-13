@@ -1,0 +1,14 @@
+<div class="status-filter">
+  <select
+    id="statusFilter"
+    class="form-select"
+    [(ngModel)]="selectedStatus"
+    (change)="onStatusChange()">
+    <option value="all">All Status</option>
+    @for(status of statusOptions; track $index) {
+    <option [value]="status">
+      {{ status | titlecase }}
+    </option>
+    }
+  </select>
+</div>

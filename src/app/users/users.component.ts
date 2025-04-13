@@ -5,24 +5,36 @@ import { user } from '../interfaces/user';
 import { UsersService } from '../services/users.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { message } from '../interfaces/message';
-import { MessagesService } from '../services/messages.service';
+import { AuthService } from '../services/auth.service';
+import { SocketService } from '../services/socket.service';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, FormsModule, SpinnerComponent],
+  imports: [CommonModule, FormsModule, SpinnerComponent, PaginationComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
   users: user[] = [];
+  paginatedUsers: user[] = [];
   isLoading: boolean = false;
   activeChatUserId: string | null = null;
   messageContent: string = '';
 
-  constructor(private usersService: UsersService, private messageService: MessagesService) { }
+  currentPage: number = 1;
+  itemsPerPage: number = 7;
+
+  constructor(
+    private usersService: UsersService,
+    private socketService: SocketService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.fetchUsers();
+    const admin = this.authService.getAdminDetails();
+    this.socketService.connect(admin._id);
   }
 
   fetchUsers() {
@@ -30,6 +42,7 @@ export class UsersComponent {
     this.usersService.getUsers().subscribe(
       (data) => {
         this.users = data;
+        this.updatePaginatedUsers();
         this.isLoading = false;
       },
       (error) => {
@@ -37,6 +50,23 @@ export class UsersComponent {
         this.isLoading = false;
       }
     );
+  }
+
+  updatePaginatedUsers() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedUsers = this.users.slice(startIndex, endIndex);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.updatePaginatedUsers();
+  }
+
+  onPageSizeChange(pageSize: number) {
+    this.itemsPerPage = pageSize;
+    this.currentPage = 1;
+    this.updatePaginatedUsers();
   }
 
   toggleChat(userId: string) {
@@ -47,27 +77,20 @@ export class UsersComponent {
     const trimmed = this.messageContent.trim();
     if (!trimmed) return;
 
-    const message: message = {
-      sender: 'Admin',
-      sender_Role: 'admin',
-      room: user._id,
+    const admin = this.authService.getAdminDetails();
+    const msg: message = {
+      sender: admin._id,
+      sender_role: 'admin',
+      receiver: user._id,
       content: trimmed,
+      createdAt: new Date().toISOString()
     };
 
-    this.messageService.sendMessage(message).subscribe({
-      next: (response) => {
-        if (response.status === 'success') {
-          console.log('Message sent:', response.data);
-          this.messageContent = '';
-          this.activeChatUserId = null;
-        } else {
-          console.warn('Unexpected status:', response.status);
-        }
-      },
-      error: (err) => {
-        console.error('Error sending message:', err);
-      },
-    });
+    this.socketService.sendPrivateMessage(msg);
+
+    console.log('Message sent via socket:', msg);
+    this.messageContent = '';
+    this.activeChatUserId = null;
   }
 
 }

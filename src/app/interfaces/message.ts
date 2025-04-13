@@ -1,6 +1,8 @@
 export interface message {
-  sender: string;
-  sender_Role: string;
-  room: string;
+  sender: Object;
+  sender_role: string;
+  room?: string;
+  receiver: string;
   content: string;
+  createdAt?: string;
 }

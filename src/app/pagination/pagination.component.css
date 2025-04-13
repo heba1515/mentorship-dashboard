@@ -1,0 +1,18 @@
+.pagination-container {
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+}
+
+.page-size-selector {
+  width: 120px;
+}
+
+.btn-success {
+  background-color: #118577;
+  border: none;
+}

@@ -2,6 +2,20 @@
 <h2>Transactions</h2>
 <p>Dashboard / <span class="frist-color">Transactions</span></p>
 
+<!-- Filter Controls -->
+<div class="p-3 border-bottom">
+  <div class="row">
+    <div class="col-md-3">
+      <app-status-filter
+        label="Filter by Payment Status"
+        [statusOptions]="availableStatuses"
+        [selectedStatus]="paymentStatusFilter"
+        (statusChange)="onFilterChange($event)">
+      </app-status-filter>
+    </div>
+  </div>
+</div>
+
 <div class="card rounded">
   <div class="card-body p-0">
     @if(isLoading) {
@@ -22,7 +36,7 @@
           </tr>
         </thead>
         <tbody>
-          @for(transaction of transactions; track transaction._id; let i = $index){
+          @for(transaction of paginatedTransactions; track transaction._id; let i = $index){
           <tr>
             <td class="ps-4">
               <div class="d-flex align-items-center">
@@ -76,6 +90,16 @@
           }
         </tbody>
       </table>
+
+      @if(transactions.length > 0) {
+        <app-pagination
+          [currentPage]="currentPage"
+          [itemsPerPage]="itemsPerPage"
+          [totalItems]="transactions.length"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)">
+        </app-pagination>
+      }
     </div>
     }
   </div>

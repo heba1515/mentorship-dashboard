@@ -2,6 +2,19 @@
 <h2>Sessions</h2>
 <p>Dashboard / <span class="frist-color">Sessions</span></p>
 
+  <!-- Filter Controls -->
+  <div class="p-3 border-bottom">
+    <div class="row">
+      <div class="col-md-3">
+        <app-status-filter
+          [statusOptions]="availableStatuses"
+          [selectedStatus]="statusFilter"
+          (statusChange)="onFilterChange($event)">
+        </app-status-filter>
+      </div>
+    </div>
+  </div>
+
 <div class="card rounded">
   <div class="card-body p-0">
     @if(isLoading) {
@@ -24,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          @for(session of sessions; track session._id; let i = $index){
+          @for(session of paginatedSessions; track session._id; let i = $index){
           <tr>
             <td class="ps-4">
               <div class="d-flex align-items-center">
@@ -79,6 +92,16 @@
           }
         </tbody>
       </table>
+
+      @if(filteredSessions.length > 0) {
+        <app-pagination
+          [currentPage]="currentPage"
+          [itemsPerPage]="itemsPerPage"
+          [totalItems]="filteredSessions.length"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)">
+        </app-pagination>
+      }
     </div>
     }
   </div>

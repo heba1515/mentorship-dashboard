@@ -1,0 +1,7 @@
+.price-range-filter .input-group {
+  max-width: 400px;
+}
+.price-range-filter .input-group-text {
+  min-width: 40px;
+  justify-content: center;
+}

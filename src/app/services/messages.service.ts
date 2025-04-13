@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { message } from '../interfaces/message';
@@ -11,13 +11,9 @@ export class MessagesService {
 
   constructor(private http: HttpClient) {}
 
-  getMessages(): Observable<message[]> {
-    return this.http.get<{ status: string; data: message[] }>(this.apiUrl).pipe(
+  getPrivateContacts(): Observable<message[]> {
+    return this.http.get<{ status: string; data: message[] }>(`${this.apiUrl}/privateContacts`).pipe(
       map(res => res.data)
     );
-  }
-
-  sendMessage(message: message): Observable<any> {
-    return this.http.post<{ status: string; data: any }>(this.apiUrl, message);
   }
 }

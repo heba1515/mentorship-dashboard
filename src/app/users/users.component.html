@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          @for(user of users; track user._id; let i = $index){
+          @for(user of paginatedUsers; track user._id; let i = $index){
           <tr>
             <td class="ps-4">
               <div class="d-flex align-items-center">
@@ -68,6 +68,16 @@
           }
         </tbody>
       </table>
+
+      @if(users.length > 0) {
+      <app-pagination
+        [currentPage]="currentPage"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="users.length"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+      }
     </div>
     }
   </div>

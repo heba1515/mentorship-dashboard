@@ -1,0 +1,16 @@
+<div class="price-range-filter">
+  <label class="form-label">{{ label }}</label>
+  <div class="input-group">
+    <input type="number" class="form-control" placeholder="Min"
+      [(ngModel)]="min" (change)="onChange()" min="0" step="0.01">
+    <span class="input-group-text">to</span>
+    <input type="number" class="form-control" placeholder="Max"
+      [(ngModel)]="max" (change)="onChange()" min="0" step="0.01">
+    @if(hasValue) {
+      <button class="btn btn-outline-secondary" type="button"
+        (click)="reset()">
+        <i class="bi bi-x"></i> Clear
+      </button>
+    }
+  </div>
+</div>
