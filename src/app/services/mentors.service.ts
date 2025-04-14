@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { mentor } from '../interfaces/mentor';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,12 @@ import { mentor } from '../interfaces/mentor';
 export class MentorsService {
   private apiUrl = 'http://localhost:3000/api/v1/mentors';
 
-  constructor(private http: HttpClient) { }
-
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   getMentors(): Observable<mentor[]> {
     return this.http.get<{ status: string; message: string; data: mentor[] }>(
       this.apiUrl,
-      { headers: this.getAuthHeaders() }
+      { headers: this.auth.getAuthHeaders() }
     ).pipe(
       map((response) => response.data)
     );
@@ -32,7 +26,7 @@ export class MentorsService {
     return this.http.post<{ status: string; message: string; data: mentor }>(
       `${this.apiUrl}/${mentorId}/activate`,
       {},
-      { headers: this.getAuthHeaders() }
+      { headers: this.auth.getAuthHeaders() }
     ).pipe(
       map((response) => response.data)
     );

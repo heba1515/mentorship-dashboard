@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -42,4 +42,14 @@ export class AuthService {
     const adminDetails = localStorage.getItem('adminDetails');
     return adminDetails ? JSON.parse(adminDetails) : null;
   }
+
+  getAuthHeaders(): HttpHeaders {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+      return new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+    }
 }

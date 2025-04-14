@@ -24,19 +24,19 @@
         </span>
         @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
         <small class="text-danger">
-          Password must be at least 6 characters long.
+          Wrong password.
         </small>
         }
       </div>
 
-      <div class="form-check mb-3">
+      <!-- <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" formControlName="rememberMe" id="rememberMeCheck" />
         <label class="form-check-label" for="rememberMeCheck">Remember Me</label>
-      </div>
+      </div> -->
 
-      <div class="text-center mb-3">
+      <!-- <div class="text-center mb-3">
         <a routerLink="/forgot-password" class="frist-color fw-semibold">Forgot Password?</a>
-      </div>
+      </div> -->
 
       <div class="d-grid mb-2">
         <button type="submit" class="btn btn-success" [disabled]="loginForm.invalid">Login</button>
