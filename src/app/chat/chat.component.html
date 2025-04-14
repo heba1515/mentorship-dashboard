@@ -1,5 +1,5 @@
 <div class="chat-container">
-  <!-- Chats List -->
+  <!-- Sidebar with Contacts -->
   <div class="chat-sidebar">
     <a class="back-button" (click)="goBack()">
       <i class="fas fa-arrow-left"></i> Back
@@ -7,43 +7,48 @@
 
     <div class="search-container">
       <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search" />
+      <input
+        type="text"
+        placeholder="Search"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange(searchTerm)"
+      />
     </div>
 
     <h4 class="chat-title">Chats</h4>
 
+    @if(isLoading) {
+    <app-spinner></app-spinner>
+    }
+
+    @if(!isLoading){
     <div class="chat-list">
-      @for(u of usersWithMessages; track $index){
-      <div class="chat-item" (click)="selectUser(u)" [class.active]="u._id === selectedUser?._id">
-        <img
-          [src]="'http://localhost:3000/img/users/' + (u.image || 'profile-img.png')"
-          [alt]="u.name || 'Avatar'"
-          class="avatar"
-        />
+      @for(u of filteredUsers; track $index){
+      <div class="chat-item" (click)="selectContact(u)" [class.active]="u._id === selectedContact?._id">
+        <img [src]="'http://localhost:3000/img/users/' + (u.image || 'profile-img.png')" [alt]="u.name || 'Avatar'"
+          class="avatar" />
         <div class="chat-info">
           <div class="chat-name">{{ u.name }}</div>
           <!-- <div class="chat-subtitle">{{ u.title }}</div> -->
         </div>
       </div>
       } @empty {
-        <div class="text-center my-5 text-muted">
-          No Chats
-        </div>
+      <div class="text-center my-5 text-muted">
+        No Chats
+      </div>
       }
     </div>
+  }
   </div>
 
-  <!-- Chat Main -->
-  @if(selectedUser) {
+  <!-- Main Chat Area -->
+  @if(selectedContact) {
   <div class="chat-main">
     <div class="chat-header">
-      <img
-        [src]="'http://localhost:3000/img/users/' + (selectedUser?.image || 'profile-img.png')"
-        [alt]="selectedUser?.name || 'User'"
-        class="avatar"
-      />
+      <img [src]="'http://localhost:3000/img/users/' + (selectedContact?.image || 'profile-img.png')"
+        [alt]="selectedContact?.name || 'User'" class="avatar" />
       <div class="chat-header-info">
-        <h5>{{ selectedUser?.name }}</h5>
+        <h5>{{ selectedContact.name }}</h5>
         <span class="status-indicator online" title="Online"></span>
       </div>
       <!-- <div class="chat-tools">
@@ -53,8 +58,9 @@
       </div> -->
     </div>
 
+    <!-- Chat Messages -->
     <div class="chat-body">
-      @for(msg of filteredMessages; track $index){
+      @for(msg of selectedMessages; track $index){
       <div [ngClass]="{ 'message-right': isCurrentUser(msg), 'message-left': !isCurrentUser(msg) }"
         class="chat-message">
         <div class="bubble">{{ msg.content }}</div>
@@ -64,7 +70,7 @@
     </div>
 
     <div class="chat-input">
-      <input type="text" placeholder="Type something" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
+      <input type="text" placeholder="Type a message..." [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
       <button (click)="sendMessage()">Send</button>
     </div>
   </div>

@@ -8,5 +8,6 @@ export interface user {
   about: string;
   skills: string[];
   confirmEmail: boolean;
+  role: string;
   updatedAt: string;
 }

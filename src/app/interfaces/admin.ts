@@ -7,6 +7,7 @@ export interface admin {
   confirmedPassword?: string;
   phone: string;
   confirmEmail: boolean;
+  role: string;
   updatedAt: string;
   isSuperAdmin: boolean;
 }

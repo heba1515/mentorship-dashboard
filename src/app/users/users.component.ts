@@ -32,9 +32,8 @@ export class UsersComponent {
   ) {}
 
   ngOnInit() {
+    this.socketService.connect();
     this.fetchUsers();
-    const admin = this.authService.getAdminDetails();
-    this.socketService.connect(admin._id);
   }
 
   fetchUsers() {
@@ -79,8 +78,8 @@ export class UsersComponent {
 
     const admin = this.authService.getAdminDetails();
     const msg: message = {
-      sender: admin._id,
-      sender_role: 'admin',
+      sender: admin,
+      sender_role: admin.role.charAt(0).toUpperCase() + admin.role.slice(1) ,
       receiver: user._id,
       content: trimmed,
       createdAt: new Date().toISOString()

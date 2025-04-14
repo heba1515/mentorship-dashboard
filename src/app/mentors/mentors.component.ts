@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { mentor } from '../interfaces/mentor';
 import { MentorsService } from '../services/mentors.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
-import { MessagesService } from '../services/messages.service';
 import { message } from '../interfaces/message';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { StatusFilterComponent } from '../status-filter/status-filter.component';
+import { AuthService } from '../services/auth.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-mentors',
@@ -30,9 +31,14 @@ export class MentorsComponent {
   statusFilter: string = 'all';
   availableStatuses = ['active', 'inactive'];
 
-  constructor(private mentorsService: MentorsService, private messageService: MessagesService) {}
+  constructor(
+    private mentorsService: MentorsService,
+    private socketService: SocketService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.socketService.connect();
     this.fetchMentors();
   }
 
@@ -106,27 +112,20 @@ export class MentorsComponent {
     const trimmed = this.messageContent.trim();
     if (!trimmed) return;
 
-    const message: message = {
-      sender: 'Admin',
-      sender_role: 'admin',
+    const admin = this.authService.getAdminDetails();
+    const msg: message = {
+      sender: admin,
+      sender_role: admin.role.charAt(0).toUpperCase() + admin.role.slice(1) ,
       receiver: mentor._id,
       content: trimmed,
+      createdAt: new Date().toISOString()
     };
 
-    // this.messageService.sendMessage(message).subscribe({
-    //   next: (response) => {
-    //     if (response.status === 'success') {
-    //       console.log('Message sent:', response.data);
-    //       this.messageContent = '';
-    //       this.activeChatMentorId = null;
-    //     } else {
-    //       console.warn('Unexpected status:', response.status);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error('Error sending message:', err);
-    //   },
-    // });
+    this.socketService.sendPrivateMessage(msg);
+
+    console.log('Message sent via socket:', msg);
+    this.messageContent = '';
+    this.activeChatMentorId = null;
   }
 
 }

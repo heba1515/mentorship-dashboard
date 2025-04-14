@@ -9,18 +9,11 @@ import { message } from '../interfaces/message';
 export class SocketService {
   private socket!: Socket;
 
-  connect(userId: string) {
+  connect() {
     this.socket = io('http://localhost:3000', {
-      query: { userId },
       transports: ['websocket'],
       withCredentials: true,
     });
-  }
-
-  disconnect() {
-    if (this.socket) {
-      this.socket.disconnect();
-    }
   }
 
   sendPrivateMessage(message: message) {
@@ -28,20 +21,17 @@ export class SocketService {
   }
 
   onPrivateMessage(): Observable<message> {
-    return new Observable<message>(observer => {
+    return new Observable<message>((observer) => {
       this.socket.on('receive_private_msg', (data: message) => {
         observer.next(data);
+        // console.log('data', data)
       });
     });
   }
 
-  // emit(event: string, data?: any) {
-  //   this.socket.emit(event, data);
-  // }
-
-  // listen<T>(event: string): Observable<T> {
-  //   return new Observable<T>((subscriber) => {
-  //     this.socket.on(event, (data: T) => subscriber.next(data));
-  //   });
-  // }
+  disconnect() {
+    if (this.socket && this.socket.connected) {
+      this.socket.disconnect();
+    }
+  }
 }

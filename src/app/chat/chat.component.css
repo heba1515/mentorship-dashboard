@@ -1,6 +1,6 @@
 .chat-container {
   display: flex;
-  height: 90vh;
+  height: 86.5vh;
   border: 1px solid #ccc;
 }
 
@@ -124,7 +124,7 @@
   border-radius: 9999px;
   padding: 8px 12px;
   margin-bottom: 1rem;
-  width: 20rem;
+  width: 90%;
   background-color: #fff;
 }
 
@@ -142,3 +142,14 @@
   background-color: transparent;
 }
 
+
+
+@media (max-width: 768px) {
+  .chat-sidebar {
+    display: none;
+  }
+
+  .chat-main {
+    width: 100%;
+  }
+}

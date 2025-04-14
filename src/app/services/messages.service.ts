@@ -11,8 +11,11 @@ export class MessagesService {
 
   constructor(private http: HttpClient) {}
 
-  getPrivateContacts(): Observable<message[]> {
-    return this.http.get<{ status: string; data: message[] }>(`${this.apiUrl}/privateContacts`).pipe(
+  getPrivateMessages(): Observable<message[]> {
+    return this.http.get<{ status: string; data: message[] }>(
+      `${this.apiUrl}/privateContacts`,
+      { withCredentials: true}
+    ).pipe(
       map(res => res.data)
     );
   }

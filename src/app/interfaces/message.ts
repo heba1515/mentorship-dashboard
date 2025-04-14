@@ -1,8 +1,11 @@
+import { admin } from "./admin";
+
 export interface message {
-  sender: Object;
+  _id?: string;
+  sender: admin;
   sender_role: string;
-  room?: string;
   receiver: string;
   content: string;
+  room?: string;
   createdAt?: string;
 }
