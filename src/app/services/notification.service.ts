@@ -10,12 +10,12 @@ import { AuthService } from './auth.service';
 export class NotificationService {
   private apiUrl = 'http://localhost:3000/api/v1/notifications';
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getNotifications(): Observable<notification[]> {
     return this.http.get<{ status: string; data: notification[] }>(
       this.apiUrl,{
-        headers: this.auth.getAuthHeaders(),
+        withCredentials: true
       })
       .pipe(map(res => res.data));
   }
@@ -24,7 +24,9 @@ export class NotificationService {
     return this.http.post<{ status: string; data: notification }>(
       `${this.apiUrl}/`,
       { id: notificationId },
-      { headers: this.auth.getAuthHeaders() }
+      {
+        withCredentials: true
+      }
     ).pipe(map(res => res.data));
   }
 }

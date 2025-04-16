@@ -50,66 +50,114 @@
 </div> -->
 
     @if(isSuperAdmin) {
-    <div class="container my-3">
-      <h4 class="py-3">New Admin</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card p-4">
-            <h4 class="mb-3">Add New Admin</h4>
-            <form [formGroup]="newAdminForm" (ngSubmit)="addAdmin()">
+      <div class="container my-3">
+        <h4 class="py-3">New Admin</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card p-4">
+              <h4 class="mb-3">Add New Admin</h4>
+              <form [formGroup]="newAdminForm" (ngSubmit)="addAdmin()">
 
-              <!-- Existing fields -->
-              <div class="form-group mt-3">
-                <label>Admin Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" formControlName="name" placeholder="Enter Admin Name" />
-              </div>
+                <!-- Admin Name -->
+                <div class="form-group mt-3">
+                  <label>Admin Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Enter Admin Name" />
+                  @if(newAdminForm.get('name')?.errors?.['required'] && newAdminForm.get('name')?.touched){
+                  <small class="text-danger">Name is required</small>
+                  }
+                  @if(newAdminForm.get('name')?.errors?.['minlength']){
+                  <small class="text-danger">Name must be at least 3 characters</small>
+                  }
+                  @else if(newAdminForm.get('name')?.errors?.['invalidName']){
+                  <small class="text-danger">Name must start with at least 3 letters</small>
+                  }
+                  @if(newAdminForm.get('name')?.errors?.['maxlength']){
+                  <small class="text-danger">Name must be at most 30 characters</small>
+                  }
+                </div>
 
-              <div class="form-group mt-3">
-                <label>Admin Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" formControlName="email" placeholder="Enter Admin Email" />
-              </div>
+                <!-- Admin Email -->
+                <div class="form-group mt-3">
+                  <label>Admin Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" formControlName="email" placeholder="Enter Admin Email" />
+                  @if(newAdminForm.get('email')?.errors?.['required'] && newAdminForm.get('email')?.touched){
+                  <small class="text-danger">Email is required</small>
+                  }
+                  @if(newAdminForm.get('email')?.errors?.['email'] || newAdminForm.get('email')?.errors?.['pattern']){
+                  <small class="text-danger">Invalid email format (ex: example123&#64;gmail.com)</small>
+                  }
+                </div>
 
-              <!-- Password Fields -->
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" formControlName="password"
-                      placeholder="Enter Password" />
+                <!-- Password Fields -->
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Password <span class="text-danger">*</span></label>
+                      <input type="password" class="form-control" formControlName="password" placeholder="Enter Password" />
+                      @if(newAdminForm.get('password')?.errors?.['required'] && newAdminForm.get('password')?.touched){
+                      <small class="text-danger">Password is required</small>
+                      }
+                      @if(newAdminForm.get('password')?.errors?.['minlength']){
+                      <small class="text-danger">Min 8 characters</small>
+                      }
+                      @else if(newAdminForm.get('password')?.errors?.['passwordStrength']){
+                      <small class="text-danger">
+                        Must contain uppercase, lowercase, number, and special character
+                      </small>
+                      }
+                      @if(newAdminForm.get('password')?.errors?.['maxlength']){
+                      <small class="text-danger">Max 29 characters</small>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Confirm Password <span class="text-danger">*</span></label>
+                      <input type="password" class="form-control" formControlName="confirmedPassword" placeholder="Confirm Password" />
+                      @if(newAdminForm.get('confirmedPassword')?.errors?.['required'] && newAdminForm.get('confirmedPassword')?.touched){
+                      <small class="text-danger">Confirm password is required</small>
+                      }
+                      @else if(newAdminForm.get('confirmedPassword')?.errors?.['passwordMismatch'] && newAdminForm.get('confirmedPassword')?.touched){
+                      <small class="text-danger">
+                        Passwords do not match
+                      </small>
+                      }
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Confirm Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" formControlName="confirmedPassword"
-                      placeholder="Confirm Password" />
-                    @if(newAdminForm.hasError('passwordMismatch') && newAdminForm.get('confirmedPassword')?.touched) {
-                    <small class="text-danger">Passwords do not match</small>
-                    }
-                  </div>
+
+                <!-- Admin Phone -->
+                <div class="form-group mt-3">
+                  <label>Admin Phone <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="phone" placeholder="Enter Admin Phone" />
+                  @if(newAdminForm.get('phone')?.errors?.['required'] && newAdminForm.get('phone')?.touched){
+                  <small class="text-danger">Phone number is required</small>
+                  }
+                  @if(newAdminForm.get('phone')?.errors?.['pattern']){
+                  <small class="text-danger">Phone must be a valid Egyptian number</small>
+                  }
                 </div>
-              </div>
 
-              <div class="form-group mt-3">
-                <label>Admin Phone <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" formControlName="phone" placeholder="Enter Admin Phone" />
-              </div>
+                <!-- Buttons -->
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-success me-3" [disabled]="newAdminForm.invalid">Add Admin</button>
+                  <button type="button" class="btn btn-outline-secondary me-3" (click)="cancelNewAdmin()">Cancel</button>
 
-              <div class="mt-4">
-                <button type="submit" class="btn btn-success me-3" [disabled]="newAdminForm.invalid">Add Admin</button>
-                <button type="button" class="btn btn-outline-secondary me-3" (click)="cancelNewAdmin()">Cancel</button>
-
-                @if(adminMessage) {
-                <small [ngClass]="{ 'frist-color': isAdminAdded, 'text-danger': !isAdminAdded }">
-                  {{ adminMessage }}
-                </small>
-                }
-              </div>
-            </form>
+                  @if(adminMessage) {
+                    <small [ngClass]="{ 'frist-color': isAdminAdded, 'text-danger': !isAdminAdded }">
+                      {{ adminMessage }}
+                    </small>
+                  }
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    }@else{
+      <div class="d-flex justify-content-center align-items-center">
+        No Settings
+      </div>
     }
   </div>
 </div>

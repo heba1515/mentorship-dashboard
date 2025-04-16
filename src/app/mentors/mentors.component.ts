@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { mentor } from '../interfaces/mentor';
@@ -24,6 +24,9 @@ export class MentorsComponent {
   isLoading: boolean = false;
   activeChatMentorId: string | null = null;
   messageContent: string = '';
+  selectedMentor: mentor | null = null;
+  showDetailsPanel = false;
+  objectKeys = Object.keys;
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -35,7 +38,7 @@ export class MentorsComponent {
     private mentorsService: MentorsService,
     private socketService: SocketService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.socketService.connect();
@@ -103,6 +106,15 @@ export class MentorsComponent {
     });
   }
 
+  openDetailsPanel(mentor: mentor) {
+    this.selectedMentor = mentor;
+    this.showDetailsPanel = true;
+  }
+
+  closeDetailsPanel() {
+    this.showDetailsPanel = false;
+    this.selectedMentor = null;
+  }
 
   toggleChat(mentorId: string) {
     this.activeChatMentorId = this.activeChatMentorId === mentorId ? null : mentorId;
@@ -115,7 +127,7 @@ export class MentorsComponent {
     const admin = this.authService.getAdminDetails();
     const msg: message = {
       sender: admin,
-      sender_role: admin.role.charAt(0).toUpperCase() + admin.role.slice(1) ,
+      sender_role: admin.role.charAt(0).toUpperCase() + admin.role.slice(1),
       receiver: mentor._id,
       content: trimmed,
       createdAt: new Date().toISOString()

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../services/users.service';
 import { admin } from '../interfaces/admin';
+import { confirmPasswordValidator, nameValidator, passwordValidator } from '../utils/validators';
 
 @Component({
   selector: 'app-settings',
@@ -28,13 +29,32 @@ export class SettingsComponent {
     });
 
     this.newAdminForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{10,15}$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmedPassword: ['', [Validators.required]]
-    }, { validator: this.passwordMatchValidator });
-
+      name: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        nameValidator
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9_.]+@[a-zA-Z]+\.(com|org|net|io|edu)$/i)
+      ]],
+      phone: ['', [
+        Validators.required,
+        Validators.pattern(/^01[0125][0-9]{8}$/)
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(29),
+        passwordValidator
+      ]],
+      confirmedPassword: ['', [
+        Validators.required,
+        confirmPasswordValidator('password')
+      ]]
+    });
   }
 
   ngOnInit() {
@@ -64,18 +84,6 @@ export class SettingsComponent {
     if (file) {
       this.websiteForm.patchValue({ [controlName]: file });
     }
-  }
-
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    if (password !== confirmPassword) {
-      form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-    } else {
-      form.get('confirmPassword')?.setErrors(null);
-    }
-    return null;
   }
 
   addAdmin() {

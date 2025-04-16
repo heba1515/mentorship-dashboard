@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { user } from '../interfaces/user';
 import { message } from '../interfaces/message';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +30,8 @@ export class ChatComponent {
   searchTerm: string = '';
   filteredUsers: user[] = [];
   private subscriptions = new Subscription();
+
+  @ViewChild('chatBody') private chatBody!: ElementRef;
 
   constructor(
     private router: Router,
@@ -177,6 +179,18 @@ export class ChatComponent {
     this.filteredUsers = this.usersWithMessages.filter(u =>
       u.name.toLowerCase().includes(this.searchTerm)
     );
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom() {
+    try {
+      this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Scroll error:', err);
+    }
   }
 
   ngOnDestroy() {

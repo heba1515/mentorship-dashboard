@@ -1,16 +1,52 @@
 <aside class="sidebar text-white d-flex flex-column justify-content-between p-3 pt-5">
   <ul class="menu">
-    <li routerLink="/dashboard" routerLinkActive="active_link" [routerLinkActiveOptions]="{exact:true}"><i class="fas fa-home"></i> Dashboard</li>
-    <li routerLink="/dashboard/admins" routerLinkActive="active_link" ><i class="fa-solid fa-user-tie"></i> Admins</li>
-    <li routerLink="/dashboard/users" routerLinkActive="active_link" ><i class="fa-solid fa-users"></i> Users</li>
-    <li routerLink="/dashboard/mentors" routerLinkActive="active_link" ><i class="fas fa-user-friends"></i> Mentors</li>
-    <li routerLink="/dashboard/sessions" routerLinkActive="active_link" ><i class="fa-solid fa-video"></i> Sessions </li>
-    <li routerLink="/dashboard/transactions" routerLinkActive="active_link"><i class="fas fa-clipboard-list"></i> Transactions</li>
-    <li routerLink="/chat" routerLinkActive="active_link"><i class="fas fa-comments"></i> Chat</li>
-    <li routerLink="/dashboard/settings" routerLinkActive="active_link"><i class="fas fa-cog"></i> Settings</li>
+    <li routerLink="/dashboard" routerLinkActive="active_link" [routerLinkActiveOptions]="{exact:true}"><i class="fas fa-home"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Dashboard</span>
+      }
+    </li>
+    <li routerLink="/dashboard/admins" routerLinkActive="active_link" ><i class="fa-solid fa-user-tie"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Admins</span>
+      }
+    </li>
+    <li routerLink="/dashboard/users" routerLinkActive="active_link" ><i class="fa-solid fa-users"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Users</span>
+      }
+    </li>
+    <li routerLink="/dashboard/mentors" routerLinkActive="active_link" ><i class="fas fa-user-friends"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Mentors</span>
+      }
+    </li>
+    <li routerLink="/dashboard/sessions" routerLinkActive="active_link" ><i class="fa-solid fa-video"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Sessions</span>
+      }
+    </li>
+    <li routerLink="/dashboard/transactions" routerLinkActive="active_link"><i class="fas fa-clipboard-list"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Transactions</span>
+      }
+    </li>
+    <li routerLink="/chat" routerLinkActive="active_link"><i class="fas fa-comments"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Chat</span>
+      }
+    </li>
+    <li routerLink="/dashboard/settings" routerLinkActive="active_link"><i class="fas fa-cog"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">Settings</span>
+      }
+    </li>
     <hr>
 
-    <li routerLink="/dashboard/profile" routerLinkActive="active_link"><i class="fa-solid fa-circle-user"></i>My Profile</li>
+    <li routerLink="/dashboard/profile" routerLinkActive="active_link"><i class="fa-solid fa-circle-user"></i>
+      @if(!isSidebarCollapsed){
+        <span class="link-text">My Profile</span>
+      }
+    </li>
     <!-- <li><i class="fas fa-bell"></i> Notification</li> -->
 
     <!-- <li class="footer-text">Privacy & Security</li> -->

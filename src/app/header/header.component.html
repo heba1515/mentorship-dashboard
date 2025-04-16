@@ -13,14 +13,14 @@
     <div class="collapse navbar-collapse py-3" id="navbarSupportedContent">
 
       <div class="nav-icons d-flex justify-content-end align-items-center w-100">
-        <div class="notification position-relative me-3" (click)="showNotificationDropdown = !showNotificationDropdown">
+        <!-- <div class="notification position-relative me-3" (click)="showNotificationDropdown = !showNotificationDropdown">
           <i class="fa-regular fa-bell"></i>
           @if(unreadCount > 0) {
           <span class="badge position-absolute top-0 start-100 translate-middle">
             {{ unreadCount }}
           </span>
           }
-        </div>
+        </div> -->
         @if(showNotificationDropdown){
         <div class="notification-dropdown">
           @for(n of notifications; track $index){

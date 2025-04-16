@@ -36,9 +36,11 @@ export class HeaderComponent {
 
     this.subscriptions.add(
       this.socketService.listenForNotifications().subscribe((notif: notification) => {
-        if (notif.type === 'message') {
-          this.notifications.unshift(notif);
-          this.unreadCount++;
+        if (notif.type === 'message' && notif.user === this.currentUser._id) {
+          if (!this.notifications.some(n => n._id === notif._id)) {
+            this.notifications.unshift(notif);
+            this.unreadCount++;
+          }
         }
       })
     );
@@ -58,6 +60,12 @@ export class HeaderComponent {
       if (notif) notif.isRead = true;
       this.unreadCount = this.notifications.filter(n => !n.isRead).length;
     });
+  }
+
+  markAllAsRead() {
+    this.notifications
+      .filter(n => !n.isRead)
+      .forEach(n => this.markNotificationRead(n._id));
   }
 
   toggleDropdown() {

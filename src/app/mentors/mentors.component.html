@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="card rounded">
+    <div class="mentors-card rounded">
       <div class="card-body p-0">
         @if(isLoading) {
         <app-spinner></app-spinner>
@@ -29,7 +29,7 @@
                 <th scope="col " class="ps-4 second-color">Mentor Name</th>
                 <th scope="col">Member Since</th>
                 <th scope="col">Email</th>
-                <th scope="col">Phone</th>
+                <th scope="col">Details</th>
                 <th scope="col">Status</th>
                 <th scope="col">Activation</th>
                 <th scope="col">Chat</th>
@@ -63,7 +63,7 @@
                 </td>
 
                 <td>
-                  <div>{{ mentor.phone }}</div>
+                  <a (click)="openDetailsPanel(mentor)" class="second-color">Show Details</a>
                 </td>
 
                 <td>
@@ -121,3 +121,115 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+<!-- Mentor Details Modal -->
+@if(selectedMentor && showDetailsPanel) {
+  <div class="modal-backdrop show"></div>
+  <div class="modal show d-block" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Mentor Details</h5>
+          <button type="button" class="btn-close" (click)="closeDetailsPanel()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="profile-header d-flex align-items-center mb-4">
+              <img [src]="'http://localhost:3000/img/users/' + (selectedMentor.image || 'profile-img.png')"
+                [alt]="selectedMentor.name" class="avatar rounded-circle me-3" style="width: 80px; height: 80px;">
+              <div>
+                <h2>{{ selectedMentor.name }}</h2>
+                <p class="text-muted">{{ selectedMentor.title }}</p>
+                <span class="badge" [ngClass]="{
+                  'bgact': selectedMentor.status === 'active',
+                  'bgpend': selectedMentor.status === 'inactive'
+                }">
+                  {{ selectedMentor.status | uppercase }}
+                </span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card mb-4">
+                  <div class="card-header bg-light">
+                    <h5>Basic Information</h5>
+                  </div>
+                  <div class="card-body">
+                    <p><strong>Email:</strong> {{ selectedMentor.email }}</p>
+                    <p><strong>Phone:</strong> {{ selectedMentor.phone || 'N/A' }}</p>
+                    <!-- <p><strong>Hourly Rate:</strong> ${{ selectedMentor?.hour_price || '0' }}</p> -->
+                    <p><strong>Member Since:</strong> {{ selectedMentor.updatedAt | date:'longDate' }}</p>
+                  </div>
+                </div>
+
+                <div class="card mb-4">
+                  <div class="card-header bg-light">
+                    <h5>Skills</h5>
+                  </div>
+                  <div class="card-body">
+                    @if(selectedMentor.skills && selectedMentor.skills.length > 0) {
+                    <div class="d-flex flex-wrap gap-2">
+                      @for(skill of selectedMentor.skills; track $index) {
+                      <span class="badge bg-secondary-subtle text-black-50" >{{ skill }}</span>
+                      }
+                    </div>
+                    } @else {
+                    <p>No skills listed</p>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card mb-4">
+                  <div class="card-header bg-light">
+                    <h5>Bio</h5>
+                  </div>
+                  <div class="card-body">
+                    <p>{{ selectedMentor.bio || 'No bio available' }}</p>
+                  </div>
+                </div>
+
+
+                <!-- <div class="card">
+                  <div class="card-header bg-light">
+                    <h5>Availability</h5>
+                  </div>
+                  <div class="card-body">
+                    @if(selectedMentor?.availability) {
+                    <div class="row">
+                      @for(day of objectKeys(selectedMentor?.availability); track $index) {
+                      <div class="col-md-6 mb-3">
+                        <h6 class="text-capitalize">{{ day }}</h6>
+                        <ul class="list-unstyled">
+                          @for(slot of selectedMentor?.availability[day]; track $index) {
+                          <li class="d-flex justify-content-between">
+                            <span>{{ slot.time }}</span>
+                            <span [class.text-success]="slot.status === 'available'"
+                                  [class.text-danger]="slot.status === 'booked'">
+                              {{ slot.status | titlecase }}
+                            </span>
+                          </li>
+                          }
+                        </ul>
+                      </div>
+                      }
+                    </div>
+                    } @else {
+                    <p>No availability set</p>
+                    }
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }

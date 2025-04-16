@@ -23,10 +23,10 @@
         <li class="nav-item">
           <a class="nav-link frist-color" [class.active]="activeTab === 'about'" (click)="toggleTab('about')">About</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link frist-color" [class.active]="activeTab === 'password'"
             (click)="toggleTab('password')">Password</a>
-        </li>
+        </li> -->
       </ul>
 
       <!-- Content -->
@@ -34,9 +34,9 @@
       <div class="card p-4">
         <div class="d-flex justify-content-between">
           <h5>Personal Details</h5>
-          <button class="btn text-decoration-underline frist-color" (click)="toggleEdit()">{{ isEditing ? 'Cancel' :
+          <!-- <button class="btn text-decoration-underline frist-color" (click)="toggleEdit()">{{ isEditing ? 'Cancel' :
             'Edit'
-            }}</button>
+            }}</button> -->
         </div>
         <hr />
         @if(!isEditing) {

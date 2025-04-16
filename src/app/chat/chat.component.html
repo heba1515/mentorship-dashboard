@@ -59,7 +59,7 @@
     </div>
 
     <!-- Chat Messages -->
-    <div class="chat-body">
+    <div class="chat-body" #chatBody>
       @for(msg of selectedMessages; track $index){
       <div [ngClass]="{ 'message-right': isCurrentUser(msg), 'message-left': !isCurrentUser(msg) }"
         class="chat-message">
